@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { vw, vh } from '../utils/dimensions';
 import strings from '../utils/strings';
+import CalenderModal from './calenderModal'; 
 import Icon from '../assets';
 
 const AddModal = ({ visible, onClose, onSave }) => {
@@ -11,6 +12,8 @@ const AddModal = ({ visible, onClose, onSave }) => {
   const [annual, setAnnual] = useState('');
   const [minimum, setMinimum] = useState('');
   const [nextPayment, setNextPayment] = useState('');
+  const [selected, setSelected] = useState('');
+  const [isCalendarVisible, setCalendarVisible] = useState(false);
 
   const handleSave = () => {
     const debtData = {
@@ -21,8 +24,21 @@ const AddModal = ({ visible, onClose, onSave }) => {
       minimum,
       nextPayment,
     };
-    onSave(debtData); 
-    onClose(); 
+    onSave(debtData);
+    onClose();
+  };
+
+  const openCalendar = () => {
+    setCalendarVisible(true);
+  };
+
+  const closeCalendar = () => {
+    setCalendarVisible(false);
+  };
+
+  const handleDateSelect = (date) => {
+    setNextPayment(date); 
+    closeCalendar(); 
   };
 
   return (
@@ -36,7 +52,6 @@ const AddModal = ({ visible, onClose, onSave }) => {
             <Text style={styles.modalTitle}>{strings.DebtDetails}</Text>
           </View>
 
-          {/* Input Fields */}
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryText}>{strings.Category}</Text>
             <TextInput
@@ -87,17 +102,19 @@ const AddModal = ({ visible, onClose, onSave }) => {
             />
           </View>
 
-          <View style={styles.categoryContainer}>
+          <TouchableOpacity style={styles.categoryContainer} onPress={openCalendar}>
             <Text style={styles.categoryText}>{strings.nextPayement}</Text>
+            <View style={{flexDirection:"row", justifyContent:"space-between"}}>
             <TextInput
               style={styles.textInput}
               value={nextPayment}
               onChangeText={setNextPayment}
               placeholderTextColor="#A9A9A9"
             />
-          </View>
+             <Image source={Icon.calneder} style={styles.calenderImage} />
+             </View>
+          </TouchableOpacity>
 
-          {/* Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Text style={styles.saveButtonText}>{strings.Save}</Text>
@@ -108,9 +125,12 @@ const AddModal = ({ visible, onClose, onSave }) => {
           </View>
         </View>
       </View>
+      <CalenderModal visible={isCalendarVisible} onClose={closeCalendar} onDateSelect={handleDateSelect} />
     </Modal>
   );
 };
+
+
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
@@ -202,6 +222,10 @@ const styles = StyleSheet.create({
     fontSize: vh(18),
     color: '#333',
   },
+  calenderImage:{
+    width:vw(20),
+    height:vh(20),
+  }
 });
 
 export default AddModal;

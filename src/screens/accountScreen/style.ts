@@ -31,6 +31,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: vw(45),
     height: vh(45),
+    tintColor: 'black',
   },
   profilePic: {
     flexDirection: "row",
@@ -48,7 +49,7 @@ const styles = StyleSheet.create({
   },
   personalText: {
     fontSize: vw(17),
-    color: "#08465E",
+    color: "black",
   },
   profileText: {
     fontSize: vw(17),

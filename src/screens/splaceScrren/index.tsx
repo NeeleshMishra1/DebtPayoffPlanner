@@ -6,34 +6,34 @@ import strings from '../../utils/strings';
 import { useNavigation } from '@react-navigation/native';
 
 type RootStackParamList = {
-    bottom: undefined;
-    login: undefined;
+  bottom: undefined;
+  login: undefined;
 };
 
 const Splace = () => {
-      const navigation = useNavigation();
+  const navigation = useNavigation();
 
-      const handleSplace = () => {
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'tutorial' }],
-        });
-      };
+  const handleSplace = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'tutorial' }],
+    });
+  };
 
-      useEffect(() => {
-        const timer = setTimeout(() => {
-          handleSplace();
-        }, 1000);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleSplace();
+    }, 1000);
 
-        return () => clearTimeout(timer);
-      }, []);
+    return () => clearTimeout(timer);
+  }, []);
 
-    return (
-        <View style={styles.container1}>
-            <Text style={styles.splaceText}>{strings.splace}</Text>
-            <Image style={styles.splaceImage} source={Icon.splace} />
-        </View>
-    );
+  return (
+    <View style={styles.container1}>
+      <Image style={styles.splaceImage} source={Icon.splace} />
+      <Text style={styles.splaceText}>{strings.splace}</Text>
+    </View>
+  );
 };
 
 export default Splace;

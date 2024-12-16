@@ -1,5 +1,5 @@
 const strings = {
-  splace:"Debt Payoff Planner",
+  splace:"Personal Finance Tracker",
   my_account:"My Account",
   personal_info:"PERSONAL INFO",
   profile:"Profile Pic",
@@ -44,7 +44,7 @@ const strings = {
   password1:"Password *",
   bySign:"By signing up you are agreeing to our",
   termOf:"Terms of Service",
-  and:"and",
+  and:" and ",
   privatePolicy:"Privacy Policy",
   alreadySign:"Already signed up? ",
   signIn:"Sign in here",
@@ -69,7 +69,8 @@ const strings = {
   currentBalance:"Current balance *",
   annual:"Annual Percentage Rate *",
   minimum:"Minimum payment *",
-  nextPayement:"Next payment due date *"
+  nextPayement:"Next payment due date *",
+  an_otp:"An OTP has been sent to"
   
 };
 

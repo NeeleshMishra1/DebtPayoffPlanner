@@ -6,16 +6,17 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#71D7EB",
+        backgroundColor: "white",
     },
     splaceImage: {
         width: vw(200),
         height: vh(200),
     },
     splaceText: {
-        fontSize: vw(30),
-        fontWeight: "700",
-        color: "white"
+        fontSize: vw(22),
+        fontWeight: "900",
+        color: "#002139",
+        padding: 20
     },
 });
 

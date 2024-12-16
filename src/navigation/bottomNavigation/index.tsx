@@ -7,8 +7,7 @@ import { vh, vw } from "../../utils/dimensions";
 import Home from "../../screens/homeScreen";
 import Debts from "../../screens/debtsScreen";
 import Strategy from "../../screens/strategyScreen";
-import Plan from "../../screens/planScreen";
-import Track from "../../screens/trackScreen";
+import Profile from "../../screens/profileScreen";
 
 type TabParamList = {
   Home: undefined;
@@ -36,7 +35,7 @@ function BottomTabs() {
           height: vh(90),
           paddingHorizontal: 10,
         },
-        tabBarActiveTintColor: "#00DEE3",
+        tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "#BABCB6",
         tabBarIcon: ({ focused,}) => {
           let iconName: ImageSourcePropType;
@@ -51,11 +50,8 @@ function BottomTabs() {
             case "Strategy":
               iconName = Icon.strategy;
               break;
-            case "Plan":
-              iconName = Icon.plan;
-              break;
-            case "Track":
-              iconName = Icon.track;
+            case "Profile":
+              iconName = Icon.profile;
               break;
             default:
               iconName = Icon.home;
@@ -68,7 +64,7 @@ function BottomTabs() {
                 {
                   width: vw(25),
                   height: vh(25),
-                  tintColor: focused ? "#00DEE3" : "#BABCB6",
+                  tintColor: focused ? "black" : "#BABCB6",
                   marginTop: 10,
                 } as ImageStyle
               }
@@ -80,8 +76,7 @@ function BottomTabs() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Debts" component={Debts} />
       <Tab.Screen name="Strategy" component={Strategy} />
-      <Tab.Screen name="Plan" component={Plan} />
-      <Tab.Screen name="Track" component={Track} />
+      <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
 }

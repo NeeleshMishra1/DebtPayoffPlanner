@@ -1,15 +1,25 @@
-import { Image, Text, TouchableOpacity, View, ScrollView } from 'react-native';
 import React, { useState } from 'react';
+import { Image, Text, TouchableOpacity, View, ScrollView, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '../../assets';
 import styles from './style';
 import DisplayOption from '../../components/displayOptions';
 import strings from '../../utils/strings';
 
-const Account = () => {
+type SwitchStates = {
+  didYouKnow: boolean;
+  paymentFundsBalance: boolean;
+  debtBalance: boolean;
+  totalDebtBalance: boolean;
+  notesInCards: boolean;
+};
+
+const Account = ({ route }: any) => {
   const navigation = useNavigation();
 
-  const [switchStates, setSwitchStates] = useState({
+  const name = route?.params?.name || "Neelesh";
+
+  const [switchStates, setSwitchStates] = useState<SwitchStates>({
     didYouKnow: false,
     paymentFundsBalance: false,
     debtBalance: false,
@@ -17,7 +27,7 @@ const Account = () => {
     notesInCards: false,
   });
 
-  const handleToggle = (key) => {
+  const handleToggle = (key: keyof SwitchStates) => {
     setSwitchStates((prevState) => ({
       ...prevState,
       [key]: !prevState[key],
@@ -26,7 +36,10 @@ const Account = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.header1} onPress={() => navigation.goBack()}>
+      <TouchableOpacity
+        style={styles.header1}
+        onPress={() => navigation.goBack()}
+      >
         <Image source={Icon.left_arrow} style={styles.leftarrow} />
         <Text style={styles.account}>{strings.my_account}</Text>
       </TouchableOpacity>
@@ -52,7 +65,7 @@ const Account = () => {
           <TouchableOpacity style={styles.profilePic}>
             <Text style={styles.profileText}>{strings.username}</Text>
             <View style={styles.profilePic1}>
-              <Text style={styles.profileText}>neelesh1@appinventive.com</Text>
+              <Text style={styles.profileText}>{name}</Text>
               <Image source={Icon.right_arrow} style={styles.rightarrow} />
             </View>
           </TouchableOpacity>
@@ -104,12 +117,12 @@ const Account = () => {
 
         <View style={styles.view}>
           <TouchableOpacity>
-          <Text style={styles.resetText}>{strings.reset}</Text>
+            <Text style={styles.resetText}>{strings.reset}</Text>
           </TouchableOpacity>
           <Text style={styles.allText}>{strings.allUSer}</Text>
           <Text style={styles.allText}> {strings.willRemain}</Text>
           <TouchableOpacity>
-          <Text style={styles.resetText1}>{strings.delete}</Text>
+            <Text style={styles.resetText1}>{strings.delete}</Text>
           </TouchableOpacity>
           <Text style={styles.allText}>{strings.allData}</Text>
         </View>

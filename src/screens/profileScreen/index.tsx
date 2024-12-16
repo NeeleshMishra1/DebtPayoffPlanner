@@ -5,9 +5,11 @@ import Icon from '../../assets'
 import { useNavigation } from '@react-navigation/native'
 import strings from '../../utils/strings'
 
-const Profile = () => {
+const Profile = ( { route }: any) => {
 
   const navigation = useNavigation();
+
+  const name = route?.params?.name || "Neelesh";
 
   const accountData = [
     { id: 1, title: "My account", icon: Icon.profile },
@@ -20,13 +22,13 @@ const Profile = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.header1} onPress={()=>navigation.goBack()}>
+      <TouchableOpacity style={styles.header1} onPress={() => navigation.goBack()}>
         <Image source={Icon.left_arrow} style={styles.leftarrow} />
       </TouchableOpacity>
       <View style={styles.profileData}>
         <Image source={Icon.profile} style={styles.profileImage} />
         <View style={styles.profileText}>
-          <Text style={styles.emailText}>Neelesh1@appinventive.com</Text>
+          <Text style={styles.emailText}>{name}</Text>
           <Text>{strings.FreeMember}</Text>
         </View>
       </View>
@@ -47,7 +49,6 @@ const Profile = () => {
           ))}
 
           <View style={styles.term}>
-            <Image source={Icon.logo} />
             <Text style={styles.serviceText}>{strings.termPolicy}</Text>
             <Text style={styles.versionText}>{strings.versinon}</Text>
           </View>

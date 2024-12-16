@@ -4,44 +4,56 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Splace from "../../screens/splaceScrren";
 import Tutorial from "../../screens/tutorialScrren";
 import Login from "../../screens/loginScrren";
-import Home from "../../screens/homeScreen";
 import BottomTabs from "../bottomNavigation";
 import Profile from "../../screens/profileScreen";
 import Account from "../../screens/accountScreen";
+import { ScreenNames } from "../screeenName";
+import Otp from "../../screens/otpScreen";
+import Detail from "../../screens/detailScreen";
 
 const Stack = createNativeStackNavigator();
 
-const RootNavigation: React.FC = () => {
+const RootNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
-          name="splace"
+          name={ScreenNames.Splace}
           component={Splace}
           options={{ headerShown: false }}
         />
          <Stack.Screen
-          name="tutorial"
+          name={ScreenNames.Tutorial}
           component={Tutorial}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="login"
+          name={ScreenNames.login}
           component={Login}
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="bottom"
+          name="otp"
+          component={Otp}
+          options={{ headerShown: false }}
+        />
+          <Stack.Screen
+          name="detail"
+          component={Detail}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name={ScreenNames.Bottom}
           component={BottomTabs}
           options={{ headerShown: false }}
         />
          <Stack.Screen
-          name="profile"
+          name={ScreenNames.profile}
           component={Profile}
           options={{ headerShown: false }}
         />
          <Stack.Screen
-          name="account"
+          name={ScreenNames.account}
           component={Account}
           options={{ headerShown: false }}
         />

@@ -4,12 +4,12 @@ import { vh, vw } from "../../utils/dimensions";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#CEF0F6",
+        backgroundColor: "#e4f7f7"
+
     },
     maincontainer: {
         flex: 1,
         padding: 20,
-        backgroundColor: "#CEF0F6",
     },
     profile: {
         flexDirection: "row",
@@ -19,20 +19,21 @@ const styles = StyleSheet.create({
     imageLogo: {
         width: vw(40),
         height: vh(40),
+        tintColor: 'black',
     },
     name: {
         fontSize: vw(22),
         fontWeight: "700",
-        color: "#08465E",
+        color: "black",
         paddingVertical: 10,
     },
     detailText: {
         fontSize: vw(15),
         fontWeight: "300",
-        color: "#08465E",
+        color: "black",
     },
     primary: {
-        backgroundColor: "white",
+        backgroundColor: "black",
         width: vw(100),
         justifyContent: "center",
         alignItems: "center",
@@ -41,8 +42,8 @@ const styles = StyleSheet.create({
     },
     primaryText: {
         fontSize: vw(15),
-        fontWeight: "300",
-        color: "#08465E",
+        fontWeight: "700",
+        color: "white",
         padding: 7,
     },
     countDown: {
@@ -103,7 +104,7 @@ const styles = StyleSheet.create({
         paddingTop: 10,
         fontSize: 22,
         fontWeight: "600",
-        color: "#08465E",
+        color: "black",
     },
     circleGraph: {
         flexDirection: "row",
@@ -145,9 +146,9 @@ const styles = StyleSheet.create({
         height: vh(50),
     },
     proMember: {
-        backgroundColor: "#061B79",
+        backgroundColor: "black",
         padding: 10,
-        paddingVertical:0,
+        paddingVertical: 0,
         borderRadius: 10,
     },
     multi: {
@@ -185,46 +186,70 @@ const styles = StyleSheet.create({
     },
     learnText: {
         fontSize: vw(15),
+        fontWeight: "800",
+        color: "black",
+    },
+    payoffTime: {
+        backgroundColor: "white",
+        marginTop: 15,
+        borderRadius: 10,
+        padding: 20,
+    },
+    payoffTimeText: {
+        fontSize: vw(20),
         fontWeight: "600",
-        color: "#08465E",
+        color: "black",
+        paddingBottom: 10,
     },
-    payoffTime:{
-        backgroundColor:"white",
-        marginTop:15,
-        borderRadius:10,
-        padding:20,
-    },
-    payoffTimeText:{
-        fontSize:vw(20),
-        fontWeight:"600",
-        color: "#08465E",
-        paddingBottom:10,
-    },
-    balanceText:{
-        fontSize:vw(18),
-        fontWeight:"500",
+    balanceText: {
+        fontSize: vw(18),
+        fontWeight: "500",
         color: "#080808",
-        paddingBottom:10,
+        paddingBottom: 10,
     },
-    inspirationImage:{
-        width:"100%",
-        height:300,
-        resizeMode:"contain",
+    inspirationImage: {
+        width: "100%",
+        height: 300,
+        resizeMode: "contain",
     },
-    dailyoffTime:{
-        backgroundColor:"white",
-        marginTop:15,
-        borderRadius:10,
-        padding:10,
+    dailyoffTime: {
+        backgroundColor: "white",
+        marginTop: 15,
+        borderRadius: 10,
+        padding: 10,
     },
-    mountainImage:{
-        width:"100%",
-        height:170,
+    mountainImage: {
+        width: "100%",
+        height: 170,
     },
-    methodText:{
-        padding:10,
-        paddingTop:10,
+    methodText: {
+        padding: 10,
+        paddingTop: 10,
+    },
+    legendContainer: {
+        marginLeft: 10,
+        justifyContent: 'center',
+    },
+    legendItem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 5,
+    },
+    legendColor: {
+        width: 15,
+        height: 15,
+        marginRight: 10,
+        borderRadius: 3,
+    },
+    legendText: {
+        fontSize: 14,
+        color: '#333',
+    },
+    ring: {
+        flexDirection: "row",
+        paddingTop: 20,
     }
+
 });
 
 export default styles;

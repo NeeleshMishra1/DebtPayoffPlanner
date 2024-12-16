@@ -59,7 +59,6 @@ const Tutorial = ({ navigation }) => {
             <Image source={Icon.left_arrow} style={styles.leftarrow} />
           )}
         </TouchableOpacity>
-        <Image source={Icon.logo} style={styles.imageLogo} />
         <TouchableOpacity style={styles.header1} onPress={handleSkip}>
           <Text style={styles.Skip}>{strings.skip}</Text>
         </TouchableOpacity>
@@ -73,6 +72,12 @@ const Tutorial = ({ navigation }) => {
           pagingEnabled
           showsHorizontalScrollIndicator={false}
           keyExtractor={(item) => item.key}
+          onMomentumScrollEnd={(event) => {
+            const index = Math.round(
+              event.nativeEvent.contentOffset.x / Dimensions.get('window').width
+            );
+            setCurrentIndex(index);
+          }}
         />
         {renderPaginationDots()}
       </View>

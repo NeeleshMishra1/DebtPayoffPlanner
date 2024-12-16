@@ -6,7 +6,7 @@ const { width } = Dimensions.get('window');
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor:"#E3F6FA"
+    backgroundColor: "white"
   },
   slide: {
     width,
@@ -18,17 +18,19 @@ const styles = StyleSheet.create({
     color: '#07455E',
     fontWeight: '700',
     textAlign: 'center',
-    paddingBottom:10,
+    paddingBottom: 10,
+    paddingTop: 50,
   },
   text: {
-    color: '#838383',
+    color: '#002139',
     fontSize: vw(17),
     textAlign: 'center',
-    paddingHorizontal:20,
+    paddingHorizontal: 20,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
+    padding: 20,
     resizeMode: 'contain',
   },
   paginationDotsContainer: {
@@ -36,55 +38,55 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    padding:20,
+    padding: 20,
   },
   paginationDot: {
     width: vw(8),
     height: vh(8),
     borderRadius: 5,
-    backgroundColor: '#28C3E0',
+    backgroundColor: '#002139',
     margin: 5,
   },
-  header:{
-    justifyContent:"space-between",
-    padding:20,
-    flexDirection:"row"
+  header: {
+    justifyContent: "space-between",
+    padding: 20,
+    flexDirection: "row"
   },
-  imageLogo:{
-    width:vw(130),
-    height:vh(40),
-    padding:5,
+  imageLogo: {
+    width: vw(130),
+    height: vh(40),
+    padding: 5,
   },
-  leftarrow:{
-    width:vw(15),
-    height:vh(15),
-    color:"#7B7E7F"
+  leftarrow: {
+    width: vw(15),
+    height: vh(15),
+    color: "#7B7E7F"
   },
-  Skip:{
-    fontSize:18,
-    color:"#7B7E7F"
+  Skip: {
+    fontSize: 18,
+    color: "#002139"
   },
-  header1:{
-    justifyContent:"space-between",
-    paddingVertical:10,
-    flexDirection:"row"
+  header1: {
+    justifyContent: "space-between",
+    paddingVertical: 10,
+    flexDirection: "row"
   },
-  button:{
-    justifyContent:"center",
-    alignItems:"center",
-    padding:10,
-    
+  button: {
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 10,
+
   },
-  buttonimage:{
-    backgroundColor:"#3CC9E4",
-    paddingHorizontal:50,
-    paddingVertical:15,
-    borderRadius:10,
+  buttonimage: {
+    backgroundColor: "#002139",
+    paddingHorizontal: 50,
+    paddingVertical: 15,
+    borderRadius: 10,
   },
-  buttonText:{
-    fontSize:vw(20),
-    fontWeight:"700",
-    color:"white"
+  buttonText: {
+    fontSize: vw(20),
+    fontWeight: "700",
+    color: "white"
   }
 });
 

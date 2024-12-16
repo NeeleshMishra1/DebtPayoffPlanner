@@ -4,15 +4,45 @@ import { vw, vh } from "../../utils/dimensions";
 const styles = StyleSheet.create({
     main: {
         flex: 1,
+        backgroundColor: "white",
+    },
+    enterText: {
+        justifyContent: "center",
+        alignItems: "center",
+        paddingVertical: 10,
+    },
+    enterText1: {
+        fontSize: vw(15),
+        fontWeight: "700",
+        color: "black",
+    },
+    phoneNumber: {
+        justifyContent: "center",
+        alignItems: "center",
+        padding: 10,
+    },
+    textInput: {
+        fontSize: vw(17),
+        margin: 5,
+        paddingLeft: 10,
+        paddingBottom: vh(5),
+    },
+    phoneInputContainer: {
+        flexDirection: "row",
+        borderBottomWidth: 1,
+        width: "70%",
     },
     container: {
         flex: 1,
         padding: 20,
     },
-    logoContainer: {
+    arrowImage: {
+        width: vw(15),
+        height: vh(15),
+    },
+    loginConatiner: {
         justifyContent: "center",
-        alignItems: "center",
-        marginTop: vh(50),
+        alignItems: "center"
     },
     image: {
         width: vw(150),
@@ -24,33 +54,6 @@ const styles = StyleSheet.create({
         fontFamily: 'FlameRegular',
         color: "black",
         margin: 20
-    },
-    enterText: {
-        fontSize: vw(15),
-        fontWeight: "500"
-    },
-    phoneNumber: {
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 20,
-    },
-    phoneInputContainer: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        width: "85%",
-    },
-    countryCode: {
-        padding: 10,
-        paddingLeft: 0,
-        fontSize: vw(15),
-        color: "#512414",
-        fontWeight: "600"
-    },
-    textInput: {
-        fontSize: vw(15),
-        borderLeftWidth: 1,
-        margin: 5,
-        paddingLeft: 10,
     },
     otpContainer: {
         justifyContent: "center",
@@ -66,6 +69,7 @@ const styles = StyleSheet.create({
         fontSize: vw(15),
         fontWeight: "800"
     }
+
 
 });
 

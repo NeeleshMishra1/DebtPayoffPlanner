@@ -1,5 +1,5 @@
 const Icon = {
-    splace: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/debtlogo.jpg"),
+    splace: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/flying_money.png"),
     left_arrow: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/left_chevron.png"),
     logo: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/Logo.png"),
     profile:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/profile.png"),
@@ -25,6 +25,7 @@ const Icon = {
     student:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/student.png"),
     mountain:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/mountain.png"),
     hustle:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/hustle.png"),
+    calneder:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/calendar.png"),
     
     
 }
