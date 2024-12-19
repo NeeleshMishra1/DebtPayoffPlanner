@@ -41,11 +41,17 @@ const Strategy = () => {
           <Text style={styles.frequencyText}>AMOUNT</Text>
           <View style={styles.amountContainer}>
             <Text style={styles.amountText}>Minimum</Text>
-            <Image source={Icon.question} style={styles.rightarrow} />
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.amountText}>ok</Text>
+              <Image source={Icon.question} style={styles.rightarrow} />
+            </View>
           </View>
           <View style={styles.amountContainer1}>
             <Text style={styles.amountText}>Extra</Text>
-            <Image source={Icon.right_arrow} style={styles.rightarrow} />
+            <View style={{ flexDirection: "row" }}>
+              <Text style={styles.amountText}>0.00</Text>
+              <Image source={Icon.right_arrow} style={styles.rightarrow} />
+            </View>
           </View>
           <View style={styles.amountContainer}>
             <Text style={styles.amountText}>Total</Text>

@@ -1,10 +1,11 @@
 import { StyleSheet } from "react-native";
 import { vh, vw } from "../../utils/dimensions";
+import { colors } from "../../themes";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#e4f7f7"
+        backgroundColor: colors.black,
     },
     main: {
         padding: 20,
@@ -12,13 +13,13 @@ const styles = StyleSheet.create({
     debtsText: {
         fontSize: vw(30),
         fontWeight: "600",
-        color: "black",
+        color: colors.white,
     },
     manageText: {
         paddingVertical: 5,
         fontSize: vw(17),
         fontWeight: "300",
-        color: "black",
+        color: colors.white,
     },
     ring: {
         flex: 1,
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     balanceText: {
         fontSize: vw(17),
         fontWeight: '600',
-        color: "#424242",
+        color: colors.black,
     },
     addContainer: {
         padding: 20,
@@ -106,8 +107,8 @@ const styles = StyleSheet.create({
     },
     addData: {
         padding: 20,
-        margin: 10,
-        backgroundColor: "#fcf8ed",
+        marginVertical: 10,
+        backgroundColor: colors.white,
         borderRadius: 10,
         paddingHorizontal: 40,
         borderLeftWidth: 2,
@@ -133,7 +134,7 @@ const styles = StyleSheet.create({
     },
     aprContainer: {
         flexDirection: 'row',
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     legendContainer: {
         marginTop: 20,
@@ -145,7 +146,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 2,
-
     },
     legendColor: {
         width: vw(10),

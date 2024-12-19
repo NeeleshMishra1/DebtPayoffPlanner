@@ -3,7 +3,7 @@ const Icon = {
     left_arrow: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/left_chevron.png"),
     logo: require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/Logo.png"),
     profile:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/profile.png"),
-    sun:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/sun.jpeg"),
+    sun:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/sunbg.png"),
     crown:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/crown.png"),
     check:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/check_mark.png"),
     home:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/dove.png"),
@@ -26,6 +26,9 @@ const Icon = {
     mountain:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/mountain.png"),
     hustle:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/hustle.png"),
     calneder:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/calendar.png"),
+    google:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/google.png"),
+    apple:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/apple.png"),
+    
     
     
 }

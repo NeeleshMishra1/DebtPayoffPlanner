@@ -4,6 +4,7 @@ import { vw, vh } from '../utils/dimensions';
 import strings from '../utils/strings';
 import CalenderModal from './calenderModal'; 
 import Icon from '../assets';
+import { colors } from '../themes';
 
 const AddModal = ({ visible, onClose, onSave }) => {
   const [category, setCategory] = useState('');
@@ -182,14 +183,14 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   saveButton: {
-    backgroundColor: '#74d5f2',
+    backgroundColor:colors.black,
     paddingVertical: vh(10),
     paddingHorizontal: vw(50),
     borderRadius: vw(8),
     marginRight: 10,
   },
   saveButtonText: {
-    color: '#037ca1',
+    color: colors.white,
     fontSize: vw(18),
     fontWeight: "600"
   },
@@ -197,7 +198,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: "center",
     borderBottomWidth: 5,
-    borderColor: "#23c6f7"
+    borderColor: colors.black,
   },
   categoryContainer: {
     paddingVertical: vh(15),

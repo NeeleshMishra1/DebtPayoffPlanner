@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Image, Text, TouchableOpacity, View, ScrollView, } from 'react-native';
+import { Image, Text, TouchableOpacity, View, ScrollView, Modal, FlatList, Pressable, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '../../assets';
 import styles from './style';
 import DisplayOption from '../../components/displayOptions';
 import strings from '../../utils/strings';
+import { vw } from '../../utils/dimensions';
+import currencies from '../../api/currencyjson';
 
 type SwitchStates = {
   didYouKnow: boolean;
@@ -16,7 +18,6 @@ type SwitchStates = {
 
 const Account = ({ route }: any) => {
   const navigation = useNavigation();
-
   const name = route?.params?.name || "Neelesh";
 
   const [switchStates, setSwitchStates] = useState<SwitchStates>({
@@ -27,11 +28,21 @@ const Account = ({ route }: any) => {
     notesInCards: false,
   });
 
+  const [currencyModalVisible, setCurrencyModalVisible] = useState(false);
+  const [selectedCurrency, setSelectedCurrency] = useState('    USD $');
+
+
+
   const handleToggle = (key: keyof SwitchStates) => {
     setSwitchStates((prevState) => ({
       ...prevState,
       [key]: !prevState[key],
     }));
+  };
+
+  const handleCurrencySelect = (currency: string) => {
+    setSelectedCurrency(currency);
+    setCurrencyModalVisible(false);
   };
 
   return (
@@ -78,8 +89,14 @@ const Account = ({ route }: any) => {
 
         <View style={styles.display}>
           <Text style={styles.personalText}>{strings.display_options}</Text>
-          <TouchableOpacity style={styles.profilePic}>
+          <TouchableOpacity
+            style={styles.profilePic}
+            onPress={() => setCurrencyModalVisible(true)}
+          >
             <Text style={styles.profileText}>{strings.Currency}</Text>
+            <View style={{ backgroundColor: "#b5b5b5", padding: 5, width: 100 }}>
+              <Text>{selectedCurrency}</Text>
+            </View>
             <Image source={Icon.right_arrow} style={styles.rightarrow} />
           </TouchableOpacity>
 
@@ -127,6 +144,29 @@ const Account = ({ route }: any) => {
           <Text style={styles.allText}>{strings.allData}</Text>
         </View>
       </ScrollView>
+      <Modal
+        visible={currencyModalVisible}
+        transparent={true}
+        animationType="fade"
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <FlatList
+              data={currencies}
+              keyExtractor={(item) => item}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <Pressable
+                  style={styles.currencyOption}
+                  onPress={() => handleCurrencySelect(item)}
+                >
+                  <Text style={styles.currencyText}>{item}</Text>
+                </Pressable>
+              )}
+            />
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 };

@@ -1,25 +1,26 @@
 import { StyleSheet } from "react-native";
 import { vh, vw } from "../../utils/dimensions";
+import { colors } from "../../themes";
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#edfcfc"
+        backgroundColor: colors.black,
     },
     main: {
         padding: 20,
-        backgroundColor: "#e4f7f7"
+        backgroundColor: colors.black,
     },
     debtsText: {
         fontSize: vw(28),
         fontWeight: "600",
-        color: "black",
+        color: colors.white,
     },
     manageText: {
         paddingVertical: 5,
         fontSize: vw(14),
         fontWeight: "600",
-        color: "black",
+        color: colors.white,
     },
     recurring: {
         backgroundColor: "white",

@@ -100,9 +100,38 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingTop: 25,
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    width: '50%',
+    height: "80%",
+    backgroundColor: '#6e6e6e',
+    borderRadius: 10,
+    position: "absolute",
+    paddingHorizontal: 15,
+    right: 10,
 
-
-
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: "white"
+  },
+  currencyOption: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    width: '100%',
+  },
+  currencyText: {
+    fontSize: 16,
+    color: "white",
+    fontWeight: "500"
+  },
 
 });
 

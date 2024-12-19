@@ -1,109 +1,54 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import React from 'react';
+import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { vw } from '../utils/dimensions';
 
-const SortModal = () => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const modalData = [
-    { key: 'APR', value: '5%' },
-    { key: 'As Added', value: '10,000 USD' },
-    { key: 'Balance', value: '8,000 USD' },
-    { key: 'Custom 1', value: 'Custom Value 1' },
-    { key: 'Custom 2', value: 'Custom Value 2' },
-    { key: 'Custom 3', value: 'Custom Value 3' },
-    { key: 'Name', value: 'John Doe' },
-    { key: 'Payoff Date', value: '2025-12-31' },
-    { key: 'Progress', value: '75%' },
-  ];
-
-  const toggleModal = () => {
-    setIsModalVisible(!isModalVisible);
-  };
-
+const SortModal = ({ visible, onSelect }) => {
+  const options = ['APR','As Added','Balance',"Custom 1","Custom 2","Custom 3","Name","Payoff Date","Progress"]; 
   return (
-    <View style={styles.container}>
-      <Modal
-        transparent={true}
-        animationType="slide"
-        visible={isModalVisible}
-        onRequestClose={toggleModal}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Custom Modal</Text>
-
-            <FlatList
-              data={modalData}
-              renderItem={({ item }) => (
-                <View style={styles.listItem}>
-                  <Text style={styles.itemKey}>{item.key}:</Text>
-                  <Text style={styles.itemValue}>{item.value}</Text>
-                </View>
-              )}
-              keyExtractor={(item) => item.key}
-            />
-
-            <TouchableOpacity style={styles.closeButton} onPress={toggleModal}>
-              <Text style={styles.buttonText}>Close</Text>
+    <Modal visible={visible} transparent={true} animationType="slide">
+      <View style={styles.modalContainer}>
+        <View style={styles.modalContent}>
+          {options.map((option, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles.option}
+              onPress={() => onSelect(option)}
+            >
+              <Text style={styles.optionText}>{option}</Text>
             </TouchableOpacity>
-          </View>
+          ))}
         </View>
-      </Modal>
-    </View>
+      </View>
+    </Modal>
   );
 };
 
-// Styles
 const styles = StyleSheet.create({
-  container: {
+  modalContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  openButton: {
-    padding: 10,
-    backgroundColor: '#007BFF',
-    borderRadius: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-  },
-  modalOverlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modalContent: {
-    width: 300,
-    padding: 20,
+    width: '50%',
     backgroundColor: 'white',
     borderRadius: 10,
+    padding:10,
+    position:"absolute",
+    right:10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.8,
+    shadowRadius: 1,
   },
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 15,
-    textAlign: 'center',
+  option: {
+    padding: 15,
+    borderBottomColor: '#ccc',
   },
-  listItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    paddingVertical: 5,
-  },
-  itemKey: {
-    fontWeight: 'bold',
-  },
-  itemValue: {
-    color: 'gray',
-  },
-  closeButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#FF5733',
-    borderRadius: 5,
-    alignItems: 'center',
+  optionText: {
+    fontSize:vw(17),
+    color: '#333',
+    fontWeight:"400"
   },
 });
 

@@ -6,8 +6,8 @@ import Icon from '../../assets';
 import PieChart from 'react-native-pie-chart';
 import SearchModal from '../../components/SearchModal';
 import AddModal from '../../components/addDebtModal';
-import { vh } from '../../utils/dimensions';
 import SortModal from '../../components/sortModal';
+import { vh } from '../../utils/dimensions';
 
 type Debt = {
   nick: string;
@@ -16,11 +16,11 @@ type Debt = {
   annual: string;
 };
 
-
 const Debts = () => {
   const [isSearchModalVisible, setSearchModalVisible] = useState<boolean>(false);
   const [isAddModalVisible, setAddModalVisible] = useState<boolean>(false);
   const [isSortModalVisible, setSortModalVisible] = useState<boolean>(false);
+  const [selectedSortOption, setSelectedSortOption] = useState<string>('APR');
   const [debts, setDebts] = useState<Debt[]>([]);
 
   const openSearchModal = () => setSearchModalVisible(true);
@@ -29,19 +29,28 @@ const Debts = () => {
   const openAddModal = () => setAddModalVisible(true);
   const closeAddModal = () => setAddModalVisible(false);
 
+  const openSortModal = () => setSortModalVisible(true);
+  const closeSortModal = () => setSortModalVisible(false);
+
+  const handleSortSelect = (option: string) => {
+    setSelectedSortOption(option);
+    closeSortModal();
+  };
+
   const handleSaveDebt = (debtData: Debt) => {
     setDebts([...debts, debtData]);
     closeAddModal();
   };
 
-  const widthAndHeight = vh(120);
+  const calculateTotalCurrentBalance = () => {
+    return debts.reduce((total, debt) => total + parseFloat(debt.currentBalance || '0'), 0).toFixed(2);
+  };
 
+  const widthAndHeight = vh(120);
   const series = debts.map((debt) => parseFloat(debt.currentBalance));
   const sliceColor = debts.map((_, index) => {
-    const colors = ['#3b58f7', '#f5d905', '#fa87d2', '#87e5fa', '#f74f20'];
+    const colors = ['#6b042a', '#194f30', '#2b1a63', '#47082f', '#629584', '#E2F1E7'];
     return colors[index % colors.length];
-
-    const totalCurrentBalance = series.reduce((sum, balance) => sum + balance, 0);
   });
 
   return (
@@ -55,14 +64,19 @@ const Debts = () => {
         <View style={styles.ring}>
           <View style={styles.ringData}>
             <Text style={styles.balanceText}>{strings.balanceBy}</Text>
-            <View style={{ flexDirection: "row", paddingVertical: 10, }}>
-              <PieChart
-                widthAndHeight={widthAndHeight}
-                series={series.length > 0 ? series : [1]}
-                sliceColor={series.length > 0 ? sliceColor : ['#d3d3d3']}
-                coverRadius={0.65}
-                coverFill={'#FFF'}
-              />
+            <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <View style={{ position: 'absolute', zIndex: 1 }}>
+                  <Text style={{ fontSize: 12, fontWeight: '600' }}>${calculateTotalCurrentBalance()}</Text>
+                </View>
+                <PieChart
+                  widthAndHeight={widthAndHeight}
+                  series={series.length > 0 ? series : [1]}
+                  sliceColor={series.length > 0 ? sliceColor : ['#d3d3d3']}
+                  coverRadius={0.65}
+                  coverFill={'#FFF'}
+                />
+              </View>
               <View style={styles.legendContainer}>
                 {debts.map((debt, index) => (
                   <View key={index} style={styles.legendItem}>
@@ -77,7 +91,6 @@ const Debts = () => {
                 ))}
               </View>
             </View>
-
           </View>
 
           <View style={styles.addContainer}>
@@ -98,10 +111,10 @@ const Debts = () => {
                 />
               </TouchableOpacity>
 
-              <TouchableOpacity style={styles.sort}>
+              <TouchableOpacity style={styles.sort} onPress={openSortModal}>
                 <Text style={styles.sortText}>Sort by</Text>
                 <View style={styles.dropDown}>
-                  <Text style={styles.aprtText}>APR</Text>
+                  <Text style={styles.aprtText}>{selectedSortOption}</Text>
                   <Image source={Icon.arrow_down} style={styles.arrowImage} />
                 </View>
               </TouchableOpacity>
@@ -118,7 +131,6 @@ const Debts = () => {
               <Text style={styles.balanceText1}>Minimum</Text>
               <Text style={styles.balanceText1}>APR</Text>
             </View>
-
             <View style={styles.aprContainer}>
               <Text style={styles.minimumText1}>{debt.minimum}</Text>
               <Text style={styles.minimumText1}>{debt.annual}</Text>
@@ -129,6 +141,11 @@ const Debts = () => {
 
       <SearchModal visible={isSearchModalVisible} onClose={closeSearchModal} />
       <AddModal visible={isAddModalVisible} onClose={closeAddModal} onSave={handleSaveDebt} />
+      <SortModal
+        visible={isSortModalVisible}
+        onClose={closeSortModal}
+        onSelect={handleSortSelect}
+      />
     </SafeAreaView>
   );
 };

@@ -32,12 +32,15 @@ const styles = StyleSheet.create({
     phoneNumber: {
         justifyContent: "center",
         alignItems: "center",
-        padding: 20,
+        margin: 10,
+        borderRadius: 50,
+        borderWidth: 1,
+        marginTop: 20,
     },
     phoneInputContainer: {
         flexDirection: "row",
-        borderBottomWidth: 1,
         width: "85%",
+        paddingVertical: 5,
     },
     countryCode: {
         padding: 10,
@@ -55,16 +58,38 @@ const styles = StyleSheet.create({
     otpContainer: {
         justifyContent: "center",
         alignItems: "center",
-        margin: vh(20),
+        margin: vh(10),
         backgroundColor: "black",
         padding: 15,
-        marginHorizontal: vw(55),
-        borderRadius: 10,
+        borderRadius: 50,
+        borderWidth: 1,
+        marginTop: vh(10),
     },
     otpText: {
         color: "white",
-        fontSize: vw(15),
+        fontSize: vw(17),
         fontWeight: "800"
+    },
+    otpContainer1: {
+        justifyContent: "center",
+        alignItems: "center",
+        margin: vh(10),
+        backgroundColor: "white",
+        padding: 15,
+        borderRadius: 50,
+        borderWidth: 1,
+        marginTop: vh(10),
+        flexDirection: "row"
+    },
+    otpText1: {
+        color: "black",
+        fontSize: vw(17),
+        fontWeight: "400"
+    },
+    googleImage: {
+        width: vw(20),
+        height: vh(20),
+        marginRight: 10,
     }
 
 });

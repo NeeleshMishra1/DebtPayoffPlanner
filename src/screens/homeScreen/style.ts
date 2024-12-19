@@ -4,36 +4,35 @@ import { vh, vw } from "../../utils/dimensions";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "#e4f7f7"
-
+        backgroundColor: "black",
     },
     maincontainer: {
         flex: 1,
         padding: 20,
+        paddingHorizontal: 10,
     },
     profile: {
         flexDirection: "row",
         justifyContent: "space-between",
-
     },
     imageLogo: {
         width: vw(40),
         height: vh(40),
-        tintColor: 'black',
+        tintColor: 'white',
     },
     name: {
         fontSize: vw(22),
         fontWeight: "700",
-        color: "black",
+        color: "white",
         paddingVertical: 10,
     },
     detailText: {
         fontSize: vw(15),
         fontWeight: "300",
-        color: "black",
+        color: "white",
     },
     primary: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         width: vw(100),
         justifyContent: "center",
         alignItems: "center",
@@ -43,12 +42,12 @@ const styles = StyleSheet.create({
     primaryText: {
         fontSize: vw(15),
         fontWeight: "700",
-        color: "white",
+        color: "black",
         padding: 7,
     },
     countDown: {
         height: vh(200),
-        backgroundColor: "#08465E",
+        backgroundColor: "white",
         borderRadius: 12,
         marginTop: vh(35),
         padding: 20,
@@ -68,23 +67,22 @@ const styles = StyleSheet.create({
     yearText: {
         fontSize: vh(28),
         fontWeight: "700",
-        color: "white"
+        color: "black"
     },
     yeartext1: {
         fontSize: vw(15),
         fontWeight: "300",
-        color: "white",
-
+        color: "black",
     },
     debtText: {
-        color: "white",
+        color: "black",
         fontSize: vw(17),
         fontWeight: "700",
         paddingBottom: 10,
     },
     mayText: {
         fontSize: vw(19),
-        color: "white",
+        color: "black",
         fontWeight: "600",
     },
     sunImage: {
@@ -137,7 +135,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     proMembershipText: {
-        color: "white",
+        color: "black",
         fontSize: vw(22),
         fontWeight: "700"
     },
@@ -146,7 +144,7 @@ const styles = StyleSheet.create({
         height: vh(50),
     },
     proMember: {
-        backgroundColor: "black",
+        backgroundColor: "white",
         padding: 10,
         paddingVertical: 0,
         borderRadius: 10,
@@ -161,24 +159,24 @@ const styles = StyleSheet.create({
         width: vw(17),
         height: vh(17),
         marginRight: 5,
-
+        tintColor: 'black',
     },
     multiText: {
         fontSize: vw(16),
         fontWeight: "400",
-        color: "white",
-
+        color: "black",
     },
     checkImage1: {
         width: vw(17),
         height: vh(17),
         marginLeft: 15,
         marginRight: 5,
+        tintColor: 'black',
     },
     learnButton: {
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "white",
+        backgroundColor: "black",
         padding: 5,
         borderRadius: 5,
         marginVertical: 10,
@@ -187,7 +185,7 @@ const styles = StyleSheet.create({
     learnText: {
         fontSize: vw(15),
         fontWeight: "800",
-        color: "black",
+        color: "white",
     },
     payoffTime: {
         backgroundColor: "white",
@@ -248,7 +246,12 @@ const styles = StyleSheet.create({
     ring: {
         flexDirection: "row",
         paddingTop: 20,
-    }
+    },
+    legendText2: {
+        fontSize: 18,
+        color: 'red',
+        fontWeight: "600"
+    },
 
 });
 

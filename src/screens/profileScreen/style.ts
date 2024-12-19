@@ -1,15 +1,16 @@
 import { StyleSheet } from "react-native";
 import { vh, vw } from "../../utils/dimensions";
+import { colors } from "../../themes";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e4f7f7"
+    backgroundColor: colors.black
   },
   leftarrow: {
     width: vw(15),
     height: vh(15),
-    color: "#7B7E7F"
+    tintColor: "white"
   },
   header: {
     flex: 1,
@@ -27,7 +28,11 @@ const styles = StyleSheet.create({
   profileImage: {
     width: vw(65),
     height: vh(65),
-    tintColor: 'black',
+    tintColor: colors.white,
+  },
+  freeText: {
+    fontSize: vw(16),
+    color: colors.white,
   },
   profileText: {
     paddingHorizontal: 20,
@@ -35,11 +40,11 @@ const styles = StyleSheet.create({
   emailText: {
     fontSize: vw(18),
     fontWeight: "600",
-    color: "black",
+    color: colors.white,
   },
   details: {
     flex: 1,
-    backgroundColor: "#f0eded",
+    backgroundColor: colors.white,
   },
   detailsAccount: {
     flexDirection: "row",
@@ -47,7 +52,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     padding: 17,
     borderBottomWidth: 1,
-    borderColor: "#d9d9d9",
+    borderColor: colors.black,
   },
   profileImage2: {
     width: vw(25),
@@ -82,9 +87,6 @@ const styles = StyleSheet.create({
     fontSize: vw(15),
     color: "#747474"
   }
-
-
-
 });
 
 export default styles;

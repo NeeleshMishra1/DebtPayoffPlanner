@@ -23,11 +23,11 @@ const chartConfig = {
       strokeWidth: 1, 
     },
     propsForHorizontalLabels: {
-      stroke: "#8f8f8f", 
+      stroke: "black", 
       strokeWidth: 0.5,
     },
     propsForVerticalLabels: {
-      stroke: "#8f8f8f", 
+      stroke: "black", 
       strokeWidth: 0.5,
     },
   };
