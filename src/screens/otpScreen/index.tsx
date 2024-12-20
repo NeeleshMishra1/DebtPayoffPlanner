@@ -4,12 +4,12 @@ import styles from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "../../assets";
 import strings from "../../utils/strings";
+import { OtpInput } from 'react-native-otp-entry';
 
 const Otp = ({ route, navigation }: any) => {
     const { phoneNumber } = route.params;
     const [otp, setOtp] = useState("");
     const fixedOtp = "123456";
-    const [timer, setTimer] = useState(0);
 
     const handleVerifyOtp = () => {
         if (otp === fixedOtp) {
@@ -21,18 +21,6 @@ const Otp = ({ route, navigation }: any) => {
         }
     };
 
-    const handleResendOtp = () => {
-        setTimer(30);
-    };
-
-    useEffect(() => {
-        if (timer > 0) {
-            const countdown = setInterval(() => {
-                setTimer((prevTimer) => prevTimer - 1);
-            }, 1000);
-            return () => clearInterval(countdown);
-        }
-    }, [timer]);
 
     return (
         <SafeAreaView style={styles.main}>
@@ -52,20 +40,24 @@ const Otp = ({ route, navigation }: any) => {
                     </Text>
                 </View>
                 <View style={styles.phoneNumber}>
-                    <View style={styles.phoneInputContainer}>
-                        <TextInput
-                            style={styles.textInput}
-                            placeholder="One time password"
-                            keyboardType="phone-pad"
-                            maxLength={6}
-                            value={otp}
-                            onChangeText={setOtp}
-                        />
-                    </View>
+                    <OtpInput
+                        numberOfDigits={6}
+                        focusColor="#2f71a3"
+                        placeholder="0000"
+                        value={otp}
+                        type="numeric"
+                        autoFocus
+                        onTextChange={(text) => setOtp(text)}
+                        theme={{
+
+                            pinCodeTextStyle: styles.pinCodeText,
+
+                        }}
+                    />
                 </View>
 
                 <TouchableOpacity style={styles.otpContainer} onPress={handleVerifyOtp}>
-                    <Text style={styles.otpText}>Get Otp</Text>
+                    <Text style={styles.otpText}>Continue</Text>
                 </TouchableOpacity>
 
             </View>

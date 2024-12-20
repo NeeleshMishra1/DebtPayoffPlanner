@@ -20,16 +20,17 @@ const Home = ({ route }: any) => {
   const name = route?.params?.name || "Neelesh";
 
   const debts = [
-    { nick: 'Loan 1', currentBalance: '5000', minimum: '200', annual: '5%' },
-    { nick: 'Loan 2', currentBalance: '3000', minimum: '150', annual: '3%' },
+    { nick: 'Principle Paid', currentBalance: '5000', minimum: '200', annual: '5%' },
+    { nick: 'Balance', currentBalance: '1000', minimum: '150', annual: '3%' },
   ];
 
   const widthAndHeight = vh(150);
   const series = debts.map((debt) => parseFloat(debt.currentBalance));
   const sliceColor = debts.map((_, index) => {
-    const colors = ['#3b58f7', '#f5d905', '#fa87d2', '#87e5fa', '#f74f20'];
+    const colors = ['#387478', '#E2F1E7'];
     return colors[index % colors.length];
   });
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -90,7 +91,10 @@ const Home = ({ route }: any) => {
                           { backgroundColor: sliceColor[index] || '#90eafc' },
                         ]}
                       />
-                      <Text style={styles.legendText}>{debt.nick}</Text>
+                      <View>
+                        <Text style={styles.legendText}>{debt.nick}</Text>
+                        <Text style={styles.legendText2}>{debt.currentBalance}</Text>
+                      </View>
                     </View>
                   ))}
                 </View>

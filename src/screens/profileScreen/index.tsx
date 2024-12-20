@@ -5,7 +5,7 @@ import Icon from '../../assets'
 import { useNavigation } from '@react-navigation/native'
 import strings from '../../utils/strings'
 
-const Profile = ( { route }: any) => {
+const Profile = ({ route }: any) => {
 
   const navigation = useNavigation();
 
@@ -29,7 +29,7 @@ const Profile = ( { route }: any) => {
         <Image source={Icon.profile} style={styles.profileImage} />
         <View style={styles.profileText}>
           <Text style={styles.emailText}>{name}</Text>
-          <Text>{strings.FreeMember}</Text>
+          <Text style={styles.freeText}>{strings.FreeMember}</Text>
         </View>
       </View>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>

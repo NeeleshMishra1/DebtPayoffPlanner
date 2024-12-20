@@ -60,13 +60,14 @@ const styles = StyleSheet.create({
         margin: vh(20),
         backgroundColor: "black",
         padding: 15,
-        marginHorizontal: vw(55),
-        borderRadius: 10,
+        borderRadius: 50,
+        borderWidth: 1,
+        marginTop: vh(20),
     },
     otpText: {
         color: "white",
-        fontSize: vw(15),
-        fontWeight: "800"
+        fontSize: vw(17),
+        fontWeight: "700"
     },
     name: {
         justifyContent: "center",

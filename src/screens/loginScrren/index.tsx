@@ -41,8 +41,15 @@ const Login = ({ navigation }: any) => {
                     <Text style={styles.otpText}>Get Otp</Text>
                 </TouchableOpacity>
 
+                <TouchableOpacity style={styles.otpContainer1} >
+                    <Image source={Icon.google} style={styles.googleImage} />
+                    <Text style={styles.otpText1}>Continue with google</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.otpContainer1} >
+                    <Image source={Icon.apple} style={styles.googleImage} />
+                    <Text style={styles.otpText1}>Continue with Apple</Text>
+                </TouchableOpacity>
             </View>
-
 
         </SafeAreaView>
     );

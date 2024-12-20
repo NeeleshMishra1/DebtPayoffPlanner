@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     },
     phoneInputContainer: {
         flexDirection: "row",
-        borderBottomWidth: 1,
         width: "70%",
     },
     container: {
@@ -58,18 +57,35 @@ const styles = StyleSheet.create({
     otpContainer: {
         justifyContent: "center",
         alignItems: "center",
-        margin: vh(20),
+        margin: vh(10),
         backgroundColor: "black",
         padding: 15,
-        marginHorizontal: vw(55),
-        borderRadius: 10,
+        borderRadius: 50,
+        borderWidth: 1,
+        marginTop: vh(20),
     },
     otpText: {
         color: "white",
-        fontSize: vw(15),
-        fontWeight: "800"
-    }
-
+        fontSize: vw(17),
+        fontWeight: "700"
+    },
+    otpContainer1: {
+        marginBottom: 10,
+        paddingHorizontal: 50
+    },
+    otpInput: {
+        width: 50,
+        height: 50,
+        borderWidth: 2,
+        borderRadius: 10,
+        borderColor: '#ccc',
+        textAlign: 'center',
+        fontSize: 18,
+    },
+    pinCodeText: {
+        fontSize: vh(20),
+    },
+   
 
 });
 
