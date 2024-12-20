@@ -3,8 +3,6 @@ import { Image, Text, TextInput, TouchableOpacity, View, Alert } from "react-nat
 import styles from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "../../assets";
-import phoneSignIn from "../../firebase /phoneSignIn";
-import PhoneSignIn from "../../firebase /phoneSignIn";
 
 
 const Login = ({ navigation }: any) => {
@@ -52,10 +50,6 @@ const Login = ({ navigation }: any) => {
                     <Text style={styles.otpText1}>Continue with Apple</Text>
                 </TouchableOpacity>
             </View>
-
-            <PhoneSignIn/>
-            
-
 
         </SafeAreaView>
     );
