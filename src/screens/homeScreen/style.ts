@@ -16,9 +16,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     imageLogo: {
-        width: vw(40),
-        height: vh(40),
-        tintColor: 'white',
+        width: vw(50),
+        height: vh(50),
+        borderRadius: 50
     },
     name: {
         fontSize: vw(22),

@@ -9,3 +9,6 @@ const currencies = [
     "IQD IQD", "IRR IRR", "ISK IKr"
   ];
 export  default currencies;  
+
+
+

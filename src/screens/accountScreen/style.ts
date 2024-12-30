@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: vw(45),
     height: vh(45),
-    tintColor: 'black',
+    borderRadius:50,
   },
   profilePic: {
     flexDirection: "row",

@@ -19,6 +19,10 @@ const Home = ({ route }: any) => {
 
   const name = route?.params?.name || "Neelesh";
 
+  const profileImageUrl =
+    route?.params?.profilePicture || "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c";
+
+
   const debts = [
     { nick: 'Principle Paid', currentBalance: '5000', minimum: '200', annual: '5%' },
     { nick: 'Balance', currentBalance: '1000', minimum: '150', annual: '3%' },
@@ -32,6 +36,8 @@ const Home = ({ route }: any) => {
   });
 
 
+
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView>
@@ -43,7 +49,10 @@ const Home = ({ route }: any) => {
               <Text style={styles.detailText}>{strings.planTrack}</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('profile')}>
-              <Image source={Icon.profile} style={styles.imageLogo} />
+              <Image
+                source={{ uri: 'https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c' }}
+                style={styles.imageLogo}
+              />
             </TouchableOpacity>
           </View>
 

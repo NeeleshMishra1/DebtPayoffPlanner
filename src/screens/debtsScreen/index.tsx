@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Dimensions, ScrollView, Image } from 'react-native';
 import styles from './style';
 import strings from '../../utils/strings';
@@ -8,6 +8,8 @@ import SearchModal from '../../components/SearchModal';
 import AddModal from '../../components/addDebtModal';
 import SortModal from '../../components/sortModal';
 import { vh } from '../../utils/dimensions';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 type Debt = {
   nick: string;
@@ -22,9 +24,41 @@ const Debts = () => {
   const [isSortModalVisible, setSortModalVisible] = useState<boolean>(false);
   const [selectedSortOption, setSelectedSortOption] = useState<string>('APR');
   const [debts, setDebts] = useState<Debt[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [filteredDebts, setFilteredDebts] = useState<Debt[]>([]);
+
+
+  useEffect(() => {
+    const user = auth().currentUser;
+
+    if (user) {
+      const unsubscribe = firestore()
+        .collection('debts')
+        .where('userId', '==', user.uid)
+        .onSnapshot(
+          (snapshot) => {
+            const fetchedDebts = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            })) as Debt[];
+            setDebts(fetchedDebts);
+            setFilteredDebts(fetchedDebts); 
+          },
+          (error) => {
+            console.error('Error fetching debts:', error);
+          }
+        );
+
+      return () => unsubscribe();
+    }
+  }, []);
 
   const openSearchModal = () => setSearchModalVisible(true);
-  const closeSearchModal = () => setSearchModalVisible(false);
+  const closeSearchModal = () => {
+    setSearchModalVisible(false);
+    setSearchQuery('');
+    setFilteredDebts(debts); 
+  };
 
   const openAddModal = () => setAddModalVisible(true);
   const closeAddModal = () => setAddModalVisible(false);
@@ -52,6 +86,17 @@ const Debts = () => {
     const colors = ['#6b042a', '#194f30', '#2b1a63', '#47082f', '#629584', '#E2F1E7'];
     return colors[index % colors.length];
   });
+
+
+
+  const handleSearchChange = (text: string) => {
+    setSearchQuery(text);
+    const results = debts.filter((debt) =>
+      debt.nick.toLowerCase().includes(text.toLowerCase())
+    );
+    setFilteredDebts(results);
+  };
+  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -108,6 +153,8 @@ const Debts = () => {
                   placeholder="Search"
                   placeholderTextColor="#A9A9A9"
                   style={styles.searchInput}
+                  editable={false}
+                  selectTextOnFocus={false}
                 />
               </TouchableOpacity>
 
@@ -139,7 +186,14 @@ const Debts = () => {
         ))}
       </ScrollView>
 
-      <SearchModal visible={isSearchModalVisible} onClose={closeSearchModal} />
+      
+      <SearchModal
+        visible={isSearchModalVisible}
+        onClose={closeSearchModal}
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
+        debts={filteredDebts}
+      />
       <AddModal visible={isAddModalVisible} onClose={closeAddModal} onSave={handleSaveDebt} />
       <SortModal
         visible={isSortModalVisible}
@@ -151,3 +205,7 @@ const Debts = () => {
 };
 
 export default Debts;
+
+
+
+
