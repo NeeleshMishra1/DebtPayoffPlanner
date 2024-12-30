@@ -1,9 +1,9 @@
 import React from 'react';
 import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import { vw } from '../utils/dimensions';
+import { vh, vw } from '../utils/dimensions';
 
-const SortModal = ({ visible, onSelect }) => {
-  const options = ['APR', 'As Added', 'Balance', "Name", "Payoff Date",];
+const CategoryModal = ({ visible, onSelect }) => {
+  const options = ["Credit card", "Auto loan", "personal Loan", "Student loan", 'Medical Loan', 'Taxes', "Others"];
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>
@@ -25,21 +25,21 @@ const SortModal = ({ visible, onSelect }) => {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+
   },
   modalContent: {
-    width: '50%',
+    width: '90%',
     backgroundColor: 'white',
-    borderRadius: 10,
+    borderRadius: 5,
     padding: 10,
     position: "absolute",
-    right: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.8,
-    shadowRadius: 1,
+    top: vh(180),
+    // shadowColor: '#000',
+    // shadowOffset: { width: 0, height: 1 },
+    // shadowOpacity: 0.8,
+    // shadowRadius: 1,
   },
   option: {
     padding: 15,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default SortModal;
+export default CategoryModal;
 
 
 

@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { Image, Text, TextInput, TouchableOpacity, View, Alert } from "react-native";
+import React, { useState } from "react";
+import { Image, Text, TouchableOpacity, View, Alert } from "react-native";
 import styles from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "../../assets";
-import strings from "../../utils/strings";
-import { OtpInput } from 'react-native-otp-entry';
+import { OtpInput } from "react-native-otp-entry";
+import auth from "@react-native-firebase/auth";
 
-const Otp = ({ route, navigation }: any) => {
-    const { phoneNumber } = route.params;
+const Otp = ({ route, navigation }) => {
+    const { confirmation } = route.params;
     const [otp, setOtp] = useState("");
-    const fixedOtp = "123456";
 
-    const handleVerifyOtp = () => {
-        if (otp === fixedOtp) {
+    const handleVerifyOtp = async () => {
+        try {
+            await confirmation.confirm(otp);
             Alert.alert("Success", "OTP Verified Successfully!", [
-                { text: "OK", onPress: () => navigation.navigate("detail") }
+                { text: "OK", onPress: () => navigation.navigate("detail") },
             ]);
-        } else {
+        } catch (error) {
             Alert.alert("Invalid OTP", "Please enter the correct OTP.");
+            console.error(error);
         }
     };
-
 
     return (
         <SafeAreaView style={styles.main}>
@@ -31,27 +31,22 @@ const Otp = ({ route, navigation }: any) => {
                 <View style={styles.loginConatiner}>
                     <Image source={Icon.splace} style={styles.image} />
                     <Text style={styles.loginText}>Login</Text>
-
                 </View>
 
                 <View style={styles.enterText}>
-                    <Text style={styles.enterText1}>
-                        {`${strings.an_otp} ${phoneNumber}`}
-                    </Text>
+                    <Text style={styles.enterText1}>An OTP has been sent to your number</Text>
                 </View>
                 <View style={styles.phoneNumber}>
                     <OtpInput
                         numberOfDigits={6}
                         focusColor="#2f71a3"
-                        placeholder="0000"
+                        placeholder="000000"
                         value={otp}
                         type="numeric"
                         autoFocus
                         onTextChange={(text) => setOtp(text)}
                         theme={{
-
                             pinCodeTextStyle: styles.pinCodeText,
-
                         }}
                     />
                 </View>
@@ -59,7 +54,6 @@ const Otp = ({ route, navigation }: any) => {
                 <TouchableOpacity style={styles.otpContainer} onPress={handleVerifyOtp}>
                     <Text style={styles.otpText}>Continue</Text>
                 </TouchableOpacity>
-
             </View>
         </SafeAreaView>
     );

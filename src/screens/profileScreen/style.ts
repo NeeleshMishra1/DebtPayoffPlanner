@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: vw(65),
     height: vh(65),
-    tintColor: colors.white,
+    borderRadius: 50,
   },
   freeText: {
     fontSize: vw(16),

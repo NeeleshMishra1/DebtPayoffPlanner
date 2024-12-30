@@ -3,6 +3,7 @@ import { SafeAreaView, Image, Text, TextInput, TouchableOpacity, View } from "re
 import styles from "./style";
 import Icon from "../../assets";
 import strings from "../../utils/strings";
+import { CommonActions } from "@react-navigation/native";
 
 const Detail = ({ navigation }: any) => {
     const [name, setName] = useState('');
@@ -37,7 +38,14 @@ const Detail = ({ navigation }: any) => {
 
                 <TouchableOpacity
                     style={styles.otpContainer}
-                    onPress={() => navigation.navigate("bottom", { screen: "Home", params: { name } })}>
+                    onPress={() =>
+                        navigation.dispatch(
+                            CommonActions.reset({
+                                index: 0,
+                                routes: [{ name: "bottom", params: { screen: "Home", params: { name } } }],
+                            })
+                        )
+                    }>
                     <Text style={styles.otpText}>Done</Text>
                 </TouchableOpacity>
 

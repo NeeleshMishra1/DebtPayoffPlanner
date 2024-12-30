@@ -19,7 +19,8 @@ type TabParamList = {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-function BottomTabs() {
+function BottomTabs(route: any) {
+
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -37,7 +38,7 @@ function BottomTabs() {
         },
         tabBarActiveTintColor: "black",
         tabBarInactiveTintColor: "#BABCB6",
-        tabBarIcon: ({ focused,}) => {
+        tabBarIcon: ({ focused, }) => {
           let iconName: ImageSourcePropType;
 
           switch (route.name) {

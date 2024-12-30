@@ -9,7 +9,7 @@ const Profile = ({ route }: any) => {
 
   const navigation = useNavigation();
 
-  const name = route?.params?.name || "Neelesh";
+  const email = route?.params?.email || "neelesh@example.com";
 
   const accountData = [
     { id: 1, title: "My account", icon: Icon.profile },
@@ -26,9 +26,12 @@ const Profile = ({ route }: any) => {
         <Image source={Icon.left_arrow} style={styles.leftarrow} />
       </TouchableOpacity>
       <View style={styles.profileData}>
-        <Image source={Icon.profile} style={styles.profileImage} />
+        <Image
+          source={{ uri: "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c" }}
+          style={styles.profileImage}
+        />
         <View style={styles.profileText}>
-          <Text style={styles.emailText}>{name}</Text>
+          <Text style={styles.emailText}>{email}</Text>
           <Text style={styles.freeText}>{strings.FreeMember}</Text>
         </View>
       </View>

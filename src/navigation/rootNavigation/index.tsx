@@ -27,7 +27,7 @@ const RootNavigation = () => {
           component={Tutorial}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name={ScreenNames.login}
           component={Login}
           options={{ headerShown: false }}
@@ -36,8 +36,8 @@ const RootNavigation = () => {
           name="otp"
           component={Otp}
           options={{ headerShown: false }}
-        />
-          <Stack.Screen
+        /> */}
+        <Stack.Screen
           name="detail"
           component={Detail}
           options={{ headerShown: false }}
@@ -47,17 +47,17 @@ const RootNavigation = () => {
           component={BottomTabs}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name={ScreenNames.profile}
           component={Profile}
           options={{ headerShown: false }}
         />
-         <Stack.Screen
+        <Stack.Screen
           name={ScreenNames.account}
           component={Account}
           options={{ headerShown: false }}
         />
-       
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -9,7 +9,7 @@ const CalenderModal = ({ visible, onClose, onDateSelect }) => {
 
   const onDayPress = (day) => {
     setSelectedDate(day.dateString);
-    onDateSelect(day.dateString); 
+    onDateSelect(day.dateString);
   };
 
   return (
@@ -37,15 +37,15 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    justifyContent: 'center',  
-    alignItems: 'center',      
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   modalContainer: {
-    width: vh(300),   
+    width: vh(300),
     backgroundColor: '#fff',
-    borderRadius: 5, 
+    borderRadius: 5,
     padding: vw(20),
-    justifyContent: 'space-between', 
+    justifyContent: 'space-between',
   },
   modalTitle1: {
     fontSize: vw(18),

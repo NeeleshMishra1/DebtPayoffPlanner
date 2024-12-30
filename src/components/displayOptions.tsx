@@ -27,12 +27,12 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
         borderBottomColor: "#dbdbdb",
     },
-    profileText:{
-        fontSize:vw(17),
-      },
+    profileText: {
+        fontSize: vw(17),
+    },
     switch: {
-        transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }], 
-      },
+        transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }],
+    },
 });
 
 export default DisplayOption;

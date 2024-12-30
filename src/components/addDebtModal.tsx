@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
 import { vw, vh } from '../utils/dimensions';
 import strings from '../utils/strings';
-import CalenderModal from './calenderModal'; 
+import CalenderModal from './calenderModal';
 import Icon from '../assets';
 import { colors } from '../themes';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+import CategoryModal from './categoryModal';
 
 const AddModal = ({ visible, onClose, onSave }) => {
   const [category, setCategory] = useState('');
@@ -13,10 +16,20 @@ const AddModal = ({ visible, onClose, onSave }) => {
   const [annual, setAnnual] = useState('');
   const [minimum, setMinimum] = useState('');
   const [nextPayment, setNextPayment] = useState('');
-  const [selected, setSelected] = useState('');
   const [isCalendarVisible, setCalendarVisible] = useState(false);
+  const [isCategoryModalVisible, setCategoryModalVisible] = useState(false); // Fixed syntax
 
-  const handleSave = () => {
+  const openCategoryModal = () => setCategoryModalVisible(true);
+  const closeCategoryModal = () => setCategoryModalVisible(false);
+
+  const handleSave = async () => {
+    if (!category || !nick || !currentBalance || !annual || !minimum || !nextPayment) {
+      Alert.alert('Error', 'Please fill in all the fields before saving.');
+      return;
+    }
+
+    const user = auth().currentUser;
+
     const debtData = {
       category,
       nick,
@@ -24,9 +37,19 @@ const AddModal = ({ visible, onClose, onSave }) => {
       annual,
       minimum,
       nextPayment,
+      userId: user?.uid,
+      timestamp: firestore.FieldValue.serverTimestamp(),
     };
-    onSave(debtData);
-    onClose();
+
+    try {
+      await firestore()
+        .collection('debts')
+        .add(debtData);
+      onSave(debtData);
+      onClose();
+    } catch (error) {
+      console.error('Error saving debt details:', error);
+    }
   };
 
   const openCalendar = () => {
@@ -38,8 +61,13 @@ const AddModal = ({ visible, onClose, onSave }) => {
   };
 
   const handleDateSelect = (date) => {
-    setNextPayment(date); 
-    closeCalendar(); 
+    setNextPayment(date);
+    closeCalendar();
+  };
+
+  const handleCategoryModal = (option) => {
+    setCategory(option);
+    closeCategoryModal();
   };
 
   return (
@@ -53,15 +81,17 @@ const AddModal = ({ visible, onClose, onSave }) => {
             <Text style={styles.modalTitle}>{strings.DebtDetails}</Text>
           </View>
 
-          <View style={styles.categoryContainer}>
+          <TouchableOpacity style={styles.categoryContainer} onPress={openCategoryModal}>
             <Text style={styles.categoryText}>{strings.Category}</Text>
             <TextInput
               style={styles.textInput}
               value={category}
-              onChangeText={setCategory}
+              onChangeText={handleCategoryModal}
               placeholderTextColor="#A9A9A9"
+              editable={false}
+              selectTextOnFocus={false}
             />
-          </View>
+          </TouchableOpacity>
 
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryText}>{strings.nick}</Text>
@@ -85,12 +115,15 @@ const AddModal = ({ visible, onClose, onSave }) => {
 
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryText}>{strings.annual}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={annual}
-              onChangeText={setAnnual}
-              placeholderTextColor="#A9A9A9"
-            />
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <TextInput
+                style={styles.textInput}
+                value={annual}
+                onChangeText={setAnnual}
+                placeholderTextColor="#A9A9A9"
+              />
+              <Text style={styles.calenderImage1} >%</Text>
+            </View>
           </View>
 
           <View style={styles.categoryContainer}>
@@ -105,15 +138,15 @@ const AddModal = ({ visible, onClose, onSave }) => {
 
           <TouchableOpacity style={styles.categoryContainer} onPress={openCalendar}>
             <Text style={styles.categoryText}>{strings.nextPayement}</Text>
-            <View style={{flexDirection:"row", justifyContent:"space-between"}}>
-            <TextInput
-              style={styles.textInput}
-              value={nextPayment}
-              onChangeText={setNextPayment}
-              placeholderTextColor="#A9A9A9"
-            />
-             <Image source={Icon.calneder} style={styles.calenderImage} />
-             </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <TextInput
+                style={styles.textInput}
+                value={nextPayment}
+                onChangeText={setNextPayment}
+                placeholderTextColor="#A9A9A9"
+              />
+              <Image source={Icon.calneder} style={styles.calenderImage} />
+            </View>
           </TouchableOpacity>
 
           <View style={styles.buttonContainer}>
@@ -127,22 +160,29 @@ const AddModal = ({ visible, onClose, onSave }) => {
         </View>
       </View>
       <CalenderModal visible={isCalendarVisible} onClose={closeCalendar} onDateSelect={handleDateSelect} />
+      <CategoryModal
+        visible={isCategoryModalVisible}
+        onClose={closeCategoryModal}
+        onSelect={handleCategoryModal}
+      />
     </Modal>
   );
 };
+
+export default AddModal;
+
 
 
 const styles = StyleSheet.create({
   overlay: {
     flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    backgroundColor: "white",
   },
   modalContainer: {
     height: "100%",
     backgroundColor: '#fff',
-    borderRadius: vw(20),
     padding: vw(20),
-    marginTop: vh(200),
+    marginTop: vh(40),
   },
   modalTitle1: {
     fontSize: vw(18),
@@ -183,7 +223,7 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   saveButton: {
-    backgroundColor:colors.black,
+    backgroundColor: colors.black,
     paddingVertical: vh(10),
     paddingHorizontal: vw(50),
     borderRadius: vw(8),
@@ -223,10 +263,15 @@ const styles = StyleSheet.create({
     fontSize: vh(18),
     color: '#333',
   },
-  calenderImage:{
-    width:vw(20),
-    height:vh(20),
+  calenderImage: {
+    width: vw(20),
+    height: vh(20),
+  },
+  calenderImage1: {
+    fontSize: 20,
+    fontWeight: "900",
   }
 });
 
 export default AddModal;
+

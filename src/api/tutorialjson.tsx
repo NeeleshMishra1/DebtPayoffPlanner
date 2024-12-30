@@ -79,3 +79,10 @@ const slides = [
   };
 
   export  {slides,data,LimeChart};
+
+
+
+
+
+
+  

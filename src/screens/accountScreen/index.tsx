@@ -60,7 +60,10 @@ const Account = ({ route }: any) => {
           <TouchableOpacity style={styles.profilePic}>
             <Text style={styles.profileText}>{strings.profile}</Text>
             <View style={styles.profilePic1}>
-              <Image source={Icon.profile} style={styles.profileImage} />
+              <Image
+                source={{ uri:"https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c"}}
+                style={styles.profileImage}
+              />
               <Image source={Icon.right_arrow} style={styles.rightarrow} />
             </View>
           </TouchableOpacity>

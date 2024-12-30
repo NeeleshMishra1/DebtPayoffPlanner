@@ -3,18 +3,43 @@ import { Image, Text, TextInput, TouchableOpacity, View, Alert } from "react-nat
 import styles from "./style";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "../../assets";
-
+import auth from "@react-native-firebase/auth";
+import { onGoogleButtonPress } from "../../config/fireBase";
 
 const Login = ({ navigation }: any) => {
     const [phoneNumber, setPhoneNumber] = useState("");
 
-    const handleGetOtp = () => {
+    const handleGetOtp = async () => {
+        console.log('press1');
         if (phoneNumber.length === 10) {
-            navigation.navigate("otp", { phoneNumber });
+            console.log('press2');
+
+            try {
+                const confirmation = await auth().signInWithPhoneNumber(`+91 ${phoneNumber}`);
+                console.log('pn-->', phoneNumber);
+                console.log("confirmation-->", confirmation)
+                navigation.navigate("otp", { confirmation });
+            } catch (error) {
+                Alert.alert("Error", "Failed to send OTP. Please try again.");
+                console.error(error);
+            }
         } else {
             Alert.alert("Invalid Phone Number", "Please enter a 10-digit phone number.");
         }
     };
+
+    async function signInWithGoogle() {
+        console.log('runn1');
+        try {
+            const user = await onGoogleButtonPress();
+            console.log("User signed in with Google:", user);
+            navigation.navigate("bottom", { user });
+
+        } catch (error) {
+            console.error("Google Sign-In Error:", error);
+            Alert.alert("Error", "Google Sign-In failed. Please try again.");
+        }
+    }
 
     return (
         <SafeAreaView style={styles.main}>
@@ -31,26 +56,21 @@ const Login = ({ navigation }: any) => {
                             style={styles.textInput}
                             placeholder="Enter 10-digit mobile number"
                             keyboardType="phone-pad"
-                            maxLength={10}
+                            maxLength={14}
                             value={phoneNumber}
-                            onChangeText={text => setPhoneNumber(text)}
+                            onChangeText={(text) => setPhoneNumber(text)}
                         />
                     </View>
                 </View>
                 <TouchableOpacity style={styles.otpContainer} onPress={handleGetOtp}>
-                    <Text style={styles.otpText}>Get Otp</Text>
+                    <Text style={styles.otpText}>Get OTP</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.otpContainer1} >
+                <TouchableOpacity style={styles.otpContainer1} onPress={signInWithGoogle}>
                     <Image source={Icon.google} style={styles.googleImage} />
-                    <Text style={styles.otpText1}>Continue with google</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.otpContainer1} >
-                    <Image source={Icon.apple} style={styles.googleImage} />
-                    <Text style={styles.otpText1}>Continue with Apple</Text>
+                    <Text style={styles.otpText1}>Continue with Google</Text>
                 </TouchableOpacity>
             </View>
-
         </SafeAreaView>
     );
 };
