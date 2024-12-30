@@ -17,7 +17,7 @@ const RootNavigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* <Stack.Screen
+        <Stack.Screen
           name={ScreenNames.Splace}
           component={Splace}
           options={{ headerShown: false }}
@@ -26,8 +26,8 @@ const RootNavigation = () => {
           name={ScreenNames.Tutorial}
           component={Tutorial}
           options={{ headerShown: false }}
-        /> */}
-        {/* <Stack.Screen
+        />
+        <Stack.Screen
           name={ScreenNames.login}
           component={Login}
           options={{ headerShown: false }}
@@ -36,7 +36,7 @@ const RootNavigation = () => {
           name="otp"
           component={Otp}
           options={{ headerShown: false }}
-        /> */}
+        />
         <Stack.Screen
           name="detail"
           component={Detail}
