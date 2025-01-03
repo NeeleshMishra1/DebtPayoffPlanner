@@ -17,13 +17,13 @@ const AddModal = ({ visible, onClose, onSave }) => {
   const [minimum, setMinimum] = useState('');
   const [nextPayment, setNextPayment] = useState('');
   const [isCalendarVisible, setCalendarVisible] = useState(false);
-  const [isCategoryModalVisible, setCategoryModalVisible] = useState(false); // Fixed syntax
+  const [isCategoryModalVisible, setCategoryModalVisible] = useState(false);
 
   const openCategoryModal = () => setCategoryModalVisible(true);
   const closeCategoryModal = () => setCategoryModalVisible(false);
 
   const handleSave = async () => {
-    if (!category || !nick || !currentBalance || !annual || !minimum || !nextPayment) {
+    if (!category || !currentBalance || !annual || !minimum || !nextPayment) {
       Alert.alert('Error', 'Please fill in all the fields before saving.');
       return;
     }
@@ -31,8 +31,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
     const user = auth().currentUser;
 
     const debtData = {
-      category,
-      nick,
+      category, // Save category instead of nick
       currentBalance,
       annual,
       minimum,
@@ -44,7 +43,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
     try {
       await firestore()
         .collection('debts')
-        .add(debtData);
+        .add(debtData); // Save debt data with category
       onSave(debtData);
       onClose();
     } catch (error) {
@@ -66,7 +65,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
   };
 
   const handleCategoryModal = (option) => {
-    setCategory(option);
+    setCategory(option); // Set selected category
     closeCategoryModal();
   };
 
@@ -115,15 +114,12 @@ const AddModal = ({ visible, onClose, onSave }) => {
 
           <View style={styles.categoryContainer}>
             <Text style={styles.categoryText}>{strings.annual}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TextInput
-                style={styles.textInput}
-                value={annual}
-                onChangeText={setAnnual}
-                placeholderTextColor="#A9A9A9"
-              />
-              <Text style={styles.calenderImage1} >%</Text>
-            </View>
+            <TextInput
+              style={styles.textInput}
+              value={annual}
+              onChangeText={setAnnual}
+              placeholderTextColor="#A9A9A9"
+            />
           </View>
 
           <View style={styles.categoryContainer}>
@@ -136,6 +132,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
             />
           </View>
 
+          {/* Next Payment Input */}
           <TouchableOpacity style={styles.categoryContainer} onPress={openCalendar}>
             <Text style={styles.categoryText}>{strings.nextPayement}</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -149,6 +146,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
             </View>
           </TouchableOpacity>
 
+          {/* Save and Cancel Buttons */}
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
               <Text style={styles.saveButtonText}>{strings.Save}</Text>
@@ -170,8 +168,6 @@ const AddModal = ({ visible, onClose, onSave }) => {
 };
 
 export default AddModal;
-
-
 
 const styles = StyleSheet.create({
   overlay: {
@@ -274,4 +270,3 @@ const styles = StyleSheet.create({
 });
 
 export default AddModal;
-

@@ -28,9 +28,7 @@ const Icon = {
     calneder:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/calendar.png"),
     google:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/google.png"),
     apple:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/apple.png"),
-    
-    
-    
+    edit:require("/Users/user/Desktop/DebtPayoffPlanner/src/assets/icons/edit.png")   
 }
 
 export default Icon;

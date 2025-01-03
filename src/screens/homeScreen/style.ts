@@ -106,6 +106,8 @@ const styles = StyleSheet.create({
     },
     circleGraph: {
         flexDirection: "row",
+        paddingHorizontal:10,
+        alignItems:"center",
     },
     circle: {
         width: vw(160),
@@ -225,13 +227,23 @@ const styles = StyleSheet.create({
         paddingTop: 10,
     },
     legendContainer: {
-        marginLeft: 10,
+        margin:20,
         justifyContent: 'center',
+        alignItems:'center',
     },
     legendItem: {
-        flexDirection: 'row',
         alignItems: 'center',
         marginVertical: 5,
+    },
+    legendText1:{
+        fontSize:vh(18),
+        fontWeight:"800",
+        color:"green"
+    },
+    legendText2:{
+        fontSize:vh(20),
+        fontWeight:"900",
+        color:"red"
     },
     legendColor: {
         width: 15,
@@ -240,8 +252,9 @@ const styles = StyleSheet.create({
         borderRadius: 3,
     },
     legendText: {
-        fontSize: 14,
+        fontSize: vh(16),
         color: '#333',
+        fontWeight:"300"
     },
     ring: {
         flexDirection: "row",
@@ -252,6 +265,32 @@ const styles = StyleSheet.create({
         color: 'red',
         fontWeight: "600"
     },
+    categoriesSection:{
+        marginVertical:20,
+    },
+    categoriesTitle:{
+        marginVertical:10,
+        fontSize:vh(17),
+        fontWeight:"400",
+    },
+    pieContainer2:{
+        padding:10,
+    },
+    pie2:{
+        borderRadius:10,
+        padding:15,
+        paddingHorizontal:35,
+        alignItems:"center",
+    },
+    legendContainer1: {
+        justifyContent: 'center',
+        alignItems:'center',
+    },
+    balantext:{
+        fontSize:vh(17),
+        fontWeight:"600",
+    }
+    
 
 });
 

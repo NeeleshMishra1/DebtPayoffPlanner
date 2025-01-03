@@ -1,14 +1,17 @@
-import React from 'react';
-import { Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LineChart } from 'react-native-chart-kit';
 import styles from './style';
 import Icon from '../../assets';
 import strings from '../../utils/strings';
 import { data, LimeChart } from '../../api/tutorialjson';
-import { chartConfig, chartConfig2 } from '../../api/function/allFunction';
+import { chartConfig2 } from '../../api/function/allFunction';
 import { vh } from '../../utils/dimensions';
 import PieChart from 'react-native-pie-chart';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
+
 
 type NavigationProp = {
   navigate: (screen: string) => void;
@@ -16,6 +19,7 @@ type NavigationProp = {
 
 const Home = ({ route }: any) => {
   const navigation = useNavigation<NavigationProp>();
+  const [debts, setDebts] = useState([]);
 
   const name = route?.params?.name || "Neelesh";
 
@@ -23,20 +27,54 @@ const Home = ({ route }: any) => {
     route?.params?.profilePicture || "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c";
 
 
-  const debts = [
-    { nick: 'Principle Paid', currentBalance: '5000', minimum: '200', annual: '5%' },
-    { nick: 'Balance', currentBalance: '1000', minimum: '150', annual: '3%' },
-  ];
+  useEffect(() => {
+    const user = auth().currentUser;
 
-  const widthAndHeight = vh(150);
-  const series = debts.map((debt) => parseFloat(debt.currentBalance));
-  const sliceColor = debts.map((_, index) => {
-    const colors = ['#387478', '#E2F1E7'];
-    return colors[index % colors.length];
-  });
+    if (user) {
+      const unsubscribe = firestore()
+        .collection('debts')
+        .where('userId', '==', user.uid)
+        .onSnapshot(
+          (snapshot) => {
+            const fetchedDebts = snapshot.docs.map((doc) => ({
+              id: doc.id,
+              ...doc.data(),
+            }));
+            setDebts(fetchedDebts);
+          },
+          (error) => {
+            console.error('Error fetching debts:', error);
+          }
+        );
+
+      return () => unsubscribe();
+    }
+  }, []);
+
+  const widthAndHeight = vh(120);
+  const widthAndHeight2 = vh(100);
+  const totalCurrentBalance = debts.reduce(
+    (total, debt) => total + parseFloat(debt.currentBalance || '0'),
+    0
+  );
+
+  const firstChartSeries = totalCurrentBalance > 0 ? [totalCurrentBalance] : [1];
+  const firstChartSliceColor = totalCurrentBalance > 0 ? ['#99f8ff'] : ['#d3d3d3'];
 
 
-
+  const generateRandomLightColor = () => {
+    const r = Math.floor(200 + Math.random() * 56);
+    const g = Math.floor(200 + Math.random() * 56);
+    const b = Math.floor(200 + Math.random() * 56);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+  const generateRandomLightColor1 = () => {
+    const r = Math.floor(140 + Math.random() * 56);
+    const g = Math.floor(150 + Math.random() * 56);
+    const b = Math.floor(170 + Math.random() * 56);
+    return `rgb(${r}, ${g}, ${b})`;
+  };
+ 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -55,7 +93,6 @@ const Home = ({ route }: any) => {
               />
             </TouchableOpacity>
           </View>
-
           <TouchableOpacity style={styles.primary}>
             <Text style={styles.primaryText}>{strings.primary}</Text>
           </TouchableOpacity>
@@ -83,33 +120,96 @@ const Home = ({ route }: any) => {
             <Text style={styles.payOffText}>{strings.payOff}</Text>
 
             <View style={styles.circleGraph}>
-              <View style={{ flexDirection: "row", paddingVertical: 10, }}>
-                <PieChart
-                  widthAndHeight={widthAndHeight}
-                  series={series.length > 0 ? series : [1]}
-                  sliceColor={series.length > 0 ? sliceColor : ['#d3d3d3']}
-                  coverRadius={0.75}
-                  coverFill={'#FFF'}
-                />
-                <View style={styles.legendContainer}>
-                  {debts.map((debt, index) => (
-                    <View key={index} style={styles.legendItem}>
-                      <View
-                        style={[
-                          styles.legendColor,
-                          { backgroundColor: sliceColor[index] || '#90eafc' },
-                        ]}
-                      />
-                      <View>
-                        <Text style={styles.legendText}>{debt.nick}</Text>
-                        <Text style={styles.legendText2}>{debt.currentBalance}</Text>
-                      </View>
+              <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center", paddingHorizontal: 20, }}>
+                <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center" }}>
+                  <View style={{ position: 'absolute', zIndex: 1,justifyContent:"center",alignItems:"center" }}>
+                    <Text style={{ fontSize: 18, fontWeight: '700' }}>0.0%</Text>
+                    <Text>paid</Text>
+                  </View>
+                  <PieChart
+                    widthAndHeight={widthAndHeight}
+                    series={firstChartSeries}
+                    sliceColor={firstChartSliceColor}
+                    coverRadius={0.75}
+                    coverFill={'#f5feff'}
+                  />
+                </View>
+                <View>
+                  <View style={styles.legendContainer}>
+                    <View style={styles.legendItem}>
+                      <Text style={styles.legendText}>
+                        Principal paid
+                      </Text>
+                      <Text style={styles.legendText1}>
+                        0.00
+                      </Text>
                     </View>
-                  ))}
+                    <View style={styles.legendItem}>
+                      <Text style={styles.legendText}>
+                        Balance
+                      </Text>
+                      <Text style={styles.legendText2}>
+                        {totalCurrentBalance > 0 ? totalCurrentBalance : 'N/A'}.00
+                      </Text>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
+
+
+            <View style={styles.categoriesSection}>
+              <Text style={styles.categoriesTitle}>CATEGORIES</Text>
+              <FlatList
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                data={debts}
+                keyExtractor={(item) => item.id.toString()}
+                contentContainerStyle={{ paddingHorizontal: 16 }}
+                renderItem={({ item }) => {
+                  const currentBalance = parseFloat(item.currentBalance || '0');
+                  const minimum = parseFloat(item.minimum || '0');
+                  const debtSeries = currentBalance + minimum > 0 ? [currentBalance, minimum] : [1];
+                  const debtSliceColor = currentBalance + minimum > 0
+                    ? [generateRandomLightColor1(), generateRandomLightColor()]
+                    : ['#d3d3d3'];
+                  return (
+                    <View style={styles.pieContainer2}>
+                      <View style={[styles.pie2, { backgroundColor: generateRandomLightColor() },]}>
+                        <Text style={{fontSize:18, fontWeight:"700" ,marginBottom:5,}}>{item.category} </Text>
+                        <Text>Paid off in 1 mo</Text>
+                        <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center" }}>
+                          <View style={{ position: 'absolute', zIndex: 1, }}>
+                            <Text style={{ fontSize: 18, fontWeight: '400' }}>0.0%</Text>
+                          </View>
+                          <PieChart
+                            widthAndHeight={widthAndHeight2}
+                            series={debtSeries}
+                            sliceColor={debtSliceColor}
+                            coverRadius={0.75}
+                          />
+                        </View>
+                        <View style={styles.legendContainer1}>
+                          <View style={styles.legendItem}>
+                            <Text style={styles.legendText}>
+                              Balance
+                            </Text>
+                            <Text style={styles.balantext}>
+                              {item.currentBalance}.00
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  );
+                }}
+              />
+            </View>
+
+
           </View>
+
+
 
           <View style={styles.proMember}>
             <View style={styles.proMembership}>

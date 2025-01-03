@@ -157,6 +157,10 @@ const styles = StyleSheet.create({
         fontSize: vw(14),
         color: '#333',
     },
+    editImage: {
+        width: vw(20),
+        height: vh(20),
+    },
 
 
 

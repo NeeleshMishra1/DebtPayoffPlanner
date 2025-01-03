@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text, TextInput, TouchableOpacity, View, Dimensions, ScrollView, Image } from 'react-native';
+import { SafeAreaView, Text, TextInput, TouchableOpacity, View, ScrollView, Image } from 'react-native';
 import styles from './style';
 import strings from '../../utils/strings';
 import Icon from '../../assets';
@@ -12,7 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 type Debt = {
-  nick: string;
+  category: string; // changed 'nick' to 'category'
   currentBalance: string;
   minimum: string;
   annual: string;
@@ -26,7 +26,6 @@ const Debts = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredDebts, setFilteredDebts] = useState<Debt[]>([]);
-
 
   useEffect(() => {
     const user = auth().currentUser;
@@ -87,16 +86,13 @@ const Debts = () => {
     return colors[index % colors.length];
   });
 
-
-
   const handleSearchChange = (text: string) => {
     setSearchQuery(text);
     const results = debts.filter((debt) =>
-      debt.nick.toLowerCase().includes(text.toLowerCase())
+      debt.category.toLowerCase().includes(text.toLowerCase()) // searching by category instead of nick
     );
     setFilteredDebts(results);
   };
-  
 
   return (
     <SafeAreaView style={styles.container}>
@@ -105,12 +101,12 @@ const Debts = () => {
         <Text style={styles.manageText}>{strings.manageAll}</Text>
       </View>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.ring}>
           <View style={styles.ringData}>
             <Text style={styles.balanceText}>{strings.balanceBy}</Text>
             <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
-              <View style={{ justifyContent: "center", alignItems: "center" }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ position: 'absolute', zIndex: 1 }}>
                   <Text style={{ fontSize: 12, fontWeight: '600' }}>${calculateTotalCurrentBalance()}</Text>
                 </View>
@@ -131,7 +127,7 @@ const Debts = () => {
                         { backgroundColor: sliceColor[index] || '#d3d3d3' },
                       ]}
                     />
-                    <Text style={styles.legendText}>{debt.nick}</Text>
+                    <Text style={styles.legendText}>{debt.category}</Text> {/* Updated to use category */}
                   </View>
                 ))}
               </View>
@@ -170,8 +166,13 @@ const Debts = () => {
         </View>
 
         {debts.map((debt, index) => (
-          <View key={index} style={styles.addData}>
-            <Text style={styles.nameText}>{debt.nick}</Text>
+          <TouchableOpacity key={index} style={styles.addData}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+              <Text style={styles.nameText}>{debt.category}</Text> {/* Updated to use category */}
+              <TouchableOpacity>
+                <Image source={Icon.edit} style={styles.editImage} />
+              </TouchableOpacity>
+            </View>
             <Text style={styles.balanceText1}>Balance</Text>
             <Text style={styles.currentText1}>{debt.currentBalance}</Text>
             <View style={styles.aprContainer}>
@@ -182,11 +183,10 @@ const Debts = () => {
               <Text style={styles.minimumText1}>{debt.minimum}</Text>
               <Text style={styles.minimumText1}>{debt.annual}</Text>
             </View>
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
 
-      
       <SearchModal
         visible={isSearchModalVisible}
         onClose={closeSearchModal}
@@ -205,7 +205,3 @@ const Debts = () => {
 };
 
 export default Debts;
-
-
-
-
