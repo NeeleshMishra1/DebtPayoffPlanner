@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View, } from 'react-native';
+import { FlatList, Image, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { LineChart } from 'react-native-chart-kit';
 import styles from './style';
@@ -12,7 +12,6 @@ import PieChart from 'react-native-pie-chart';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-
 type NavigationProp = {
   navigate: (screen: string) => void;
 };
@@ -20,16 +19,12 @@ type NavigationProp = {
 const Home = ({ route }: any) => {
   const navigation = useNavigation<NavigationProp>();
   const [debts, setDebts] = useState([]);
+  const [profileImageUrl, setProfileImageUrl] = useState("https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c");
 
   const name = route?.params?.name || "Neelesh";
 
-  const profileImageUrl =
-    route?.params?.profilePicture || "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c";
-
-
   useEffect(() => {
     const user = auth().currentUser;
-
     if (user) {
       const unsubscribe = firestore()
         .collection('debts')
@@ -47,6 +42,13 @@ const Home = ({ route }: any) => {
           }
         );
 
+      const userRef = firestore().collection('users').doc(user.uid);
+      userRef.get().then((doc) => {
+        if (doc.exists) {
+          const userData = doc.data();
+          setProfileImageUrl(userData?.profileImage || profileImageUrl);
+        }
+      });
       return () => unsubscribe();
     }
   }, []);
@@ -61,7 +63,6 @@ const Home = ({ route }: any) => {
   const firstChartSeries = totalCurrentBalance > 0 ? [totalCurrentBalance] : [1];
   const firstChartSliceColor = totalCurrentBalance > 0 ? ['#99f8ff'] : ['#d3d3d3'];
 
-
   const generateRandomLightColor = () => {
     const r = Math.floor(200 + Math.random() * 56);
     const g = Math.floor(200 + Math.random() * 56);
@@ -74,7 +75,6 @@ const Home = ({ route }: any) => {
     const b = Math.floor(170 + Math.random() * 56);
     return `rgb(${r}, ${g}, ${b})`;
   };
- 
 
   return (
     <SafeAreaView style={styles.container}>
@@ -82,17 +82,17 @@ const Home = ({ route }: any) => {
         <View style={styles.maincontainer}>
           <View style={styles.profile}>
             <View>
-
               <Text style={styles.name}>{`Hi, ${name}`}</Text>
               <Text style={styles.detailText}>{strings.planTrack}</Text>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('profile')}>
               <Image
-                source={{ uri: 'https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c' }}
+                source={{ uri: profileImageUrl }} // Fetching profile image from Firestore
                 style={styles.imageLogo}
               />
             </TouchableOpacity>
           </View>
+
           <TouchableOpacity style={styles.primary}>
             <Text style={styles.primaryText}>{strings.primary}</Text>
           </TouchableOpacity>
@@ -120,9 +120,9 @@ const Home = ({ route }: any) => {
             <Text style={styles.payOffText}>{strings.payOff}</Text>
 
             <View style={styles.circleGraph}>
-              <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center", paddingHorizontal: 20, }}>
+              <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center", paddingHorizontal: 20 }}>
                 <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center" }}>
-                  <View style={{ position: 'absolute', zIndex: 1,justifyContent:"center",alignItems:"center" }}>
+                  <View style={{ position: 'absolute', zIndex: 1, justifyContent: "center", alignItems: "center" }}>
                     <Text style={{ fontSize: 18, fontWeight: '700' }}>0.0%</Text>
                     <Text>paid</Text>
                   </View>
@@ -137,17 +137,11 @@ const Home = ({ route }: any) => {
                 <View>
                   <View style={styles.legendContainer}>
                     <View style={styles.legendItem}>
-                      <Text style={styles.legendText}>
-                        Principal paid
-                      </Text>
-                      <Text style={styles.legendText1}>
-                        0.00
-                      </Text>
+                      <Text style={styles.legendText}>Principal paid</Text>
+                      <Text style={styles.legendText1}>0.00</Text>
                     </View>
                     <View style={styles.legendItem}>
-                      <Text style={styles.legendText}>
-                        Balance
-                      </Text>
+                      <Text style={styles.legendText}>Balance</Text>
                       <Text style={styles.legendText2}>
                         {totalCurrentBalance > 0 ? totalCurrentBalance : 'N/A'}.00
                       </Text>
@@ -156,7 +150,6 @@ const Home = ({ route }: any) => {
                 </View>
               </View>
             </View>
-
 
             <View style={styles.categoriesSection}>
               <Text style={styles.categoriesTitle}>CATEGORIES</Text>
@@ -175,11 +168,11 @@ const Home = ({ route }: any) => {
                     : ['#d3d3d3'];
                   return (
                     <View style={styles.pieContainer2}>
-                      <View style={[styles.pie2, { backgroundColor: generateRandomLightColor() },]}>
-                        <Text style={{fontSize:18, fontWeight:"700" ,marginBottom:5,}}>{item.category} </Text>
+                      <View style={[styles.pie2, { backgroundColor: generateRandomLightColor() }]}>
+                        <Text style={{ fontSize: 18, fontWeight: "700", marginBottom: 5 }}>{item.category}</Text>
                         <Text>Paid off in 1 mo</Text>
                         <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center" }}>
-                          <View style={{ position: 'absolute', zIndex: 1, }}>
+                          <View style={{ position: 'absolute', zIndex: 1 }}>
                             <Text style={{ fontSize: 18, fontWeight: '400' }}>0.0%</Text>
                           </View>
                           <PieChart
@@ -191,12 +184,8 @@ const Home = ({ route }: any) => {
                         </View>
                         <View style={styles.legendContainer1}>
                           <View style={styles.legendItem}>
-                            <Text style={styles.legendText}>
-                              Balance
-                            </Text>
-                            <Text style={styles.balantext}>
-                              {item.currentBalance}.00
-                            </Text>
+                            <Text style={styles.legendText}>Balance</Text>
+                            <Text style={styles.balantext}>{item.currentBalance}.00</Text>
                           </View>
                         </View>
                       </View>
@@ -205,8 +194,6 @@ const Home = ({ route }: any) => {
                 }}
               />
             </View>
-
-
           </View>
 
 

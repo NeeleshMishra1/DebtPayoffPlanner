@@ -1,15 +1,19 @@
-import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
-import styles from './style'
-import Icon from '../../assets'
-import { useNavigation } from '@react-navigation/native'
-import strings from '../../utils/strings'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import styles from './style';
+import Icon from '../../assets';
+import { useNavigation } from '@react-navigation/native';
+import strings from '../../utils/strings';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Profile = ({ route }: any) => {
-
   const navigation = useNavigation();
-
   const email = route?.params?.email || "neelesh@example.com";
+  
+  const [profileImage, setProfileImage] = useState(
+    "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c"
+  );
 
   const accountData = [
     { id: 1, title: "My account", icon: Icon.profile },
@@ -20,6 +24,29 @@ const Profile = ({ route }: any) => {
     { id: 6, title: "Sign out", icon: Icon.logout },
   ];
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const user = auth().currentUser;
+        if (user) {
+          const userDoc = await firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get();
+          
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            setProfileImage(userData?.profileImage || profileImage); 
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.header1} onPress={() => navigation.goBack()}>
@@ -27,7 +54,7 @@ const Profile = ({ route }: any) => {
       </TouchableOpacity>
       <View style={styles.profileData}>
         <Image
-          source={{ uri: "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c" }}
+          source={{ uri: profileImage }}  // Use the fetched profile image
           style={styles.profileImage}
         />
         <View style={styles.profileText}>
@@ -58,7 +85,7 @@ const Profile = ({ route }: any) => {
         </View>
       </ScrollView>
     </View>
-  )
-}
+  );
+};
 
 export default Profile;

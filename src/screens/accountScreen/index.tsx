@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Image, Text, TouchableOpacity, View, Modal, FlatList, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, Text, TouchableOpacity, View, Modal, FlatList, Pressable, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Icon from '../../assets';
 import styles from './style';
 import strings from '../../utils/strings';
 import currencies from '../../api/currencyjson';
 import PhotoModal from '../../components/photoModal';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const Account = ({ route }: any) => {
   const navigation = useNavigation();
@@ -17,6 +19,30 @@ const Account = ({ route }: any) => {
     "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c"
   );
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const user = auth().currentUser;
+        if (user) {
+          const userDoc = await firestore()
+            .collection('users')
+            .doc(user.uid)
+            .get();
+          
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            setProfileImage(userData?.profileImage || profileImage);
+            setSelectedCurrency(userData?.selectedCurrency || 'USD $');
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   const handleCurrencySelect = (currency: string) => {
     setSelectedCurrency(currency);
     setCurrencyModalVisible(false);
@@ -24,6 +50,24 @@ const Account = ({ route }: any) => {
 
   const handleSelectPhoto = (imageUri: string) => {
     setProfileImage(imageUri); 
+  };
+
+  const saveProfileToFirestore = async () => {
+    try {
+      const user = auth().currentUser;
+      if (user) {
+        await firestore().collection('users').doc(user.uid).set({
+          name: user.displayName || name,
+          profileImage: profileImage,
+          selectedCurrency: selectedCurrency,
+        }, { merge: true }); 
+
+        Alert.alert("Profile updated", "Your profile details have been saved.");
+      }
+    } catch (error) {
+      console.error("Error saving profile data:", error);
+      Alert.alert("Error", "Failed to update your profile.");
+    }
   };
 
   return (
@@ -67,7 +111,7 @@ const Account = ({ route }: any) => {
             <Text>{selectedCurrency}</Text>
           </View>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={saveProfileToFirestore}>
           <Text style={styles.updateText}>Update Profile</Text>
         </TouchableOpacity>
       </View>
