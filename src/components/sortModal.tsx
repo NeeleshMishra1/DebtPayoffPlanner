@@ -3,7 +3,7 @@ import { Modal, View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { vw } from '../utils/dimensions';
 
 const SortModal = ({ visible, onSelect }) => {
-  const options = ['APR', 'As Added', 'Balance', "Name", "Payoff Date",];
+  const options = ['Balance', "Name", "Payoff Date",];
   return (
     <Modal visible={visible} transparent={true} animationType="slide">
       <View style={styles.modalContainer}>

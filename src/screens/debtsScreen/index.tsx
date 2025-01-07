@@ -12,7 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 type Debt = {
-  category: string; // changed 'nick' to 'category'
+  category: string; 
   currentBalance: string;
   minimum: string;
   annual: string;
@@ -67,8 +67,26 @@ const Debts = () => {
 
   const handleSortSelect = (option: string) => {
     setSelectedSortOption(option);
+  
+    const sortedDebts = [...debts];
+    switch (option) {
+      case 'Balance':
+        sortedDebts.sort((a, b) => parseFloat(a.currentBalance) - parseFloat(b.currentBalance));
+        break;
+      case 'Name':
+        sortedDebts.sort((a, b) => a.category.localeCompare(b.category)); 
+        break;
+      case 'Payoff Date':
+        sortedDebts.sort((a, b) => new Date(a.nextPaymentDate).getTime() - new Date(b.nextPaymentDate).getTime());
+        break;
+      default:
+        break;
+    }
+  
+    setFilteredDebts(sortedDebts); 
     closeSortModal();
   };
+  
 
   const handleSaveDebt = (debtData: Debt) => {
     setDebts([...debts, debtData]);
@@ -165,10 +183,10 @@ const Debts = () => {
           </View>
         </View>
 
-        {debts.map((debt, index) => (
+        {filteredDebts.map((debt, index) => (
           <TouchableOpacity key={index} style={styles.addData}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-              <Text style={styles.nameText}>{debt.category}</Text> {/* Updated to use category */}
+              <Text style={styles.nameText}>{debt.category}</Text> 
               <TouchableOpacity>
                 <Image source={Icon.edit} style={styles.editImage} />
               </TouchableOpacity>

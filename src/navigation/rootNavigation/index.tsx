@@ -27,7 +27,7 @@ const RootNavigation = () => {
           component={Tutorial}
           options={{ headerShown: false }}
         /> */}
-        <Stack.Screen
+        {/* <Stack.Screen
           name={ScreenNames.login}
           component={Login}
           options={{ headerShown: false }}
@@ -36,7 +36,7 @@ const RootNavigation = () => {
           name="otp"
           component={Otp}
           options={{ headerShown: false }}
-        />
+        /> */}
         <Stack.Screen
           name="detail"
           component={Detail}

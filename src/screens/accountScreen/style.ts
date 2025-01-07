@@ -4,7 +4,7 @@ import { vh, vw } from "../../utils/dimensions";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#edebeb",
+    backgroundColor: "white",
   },
   header1: {
     paddingTop: Platform.OS === 'ios' ? 70 : 0,
@@ -21,7 +21,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: "30%",
     fontSize: vw(18),
     fontWeight: "700",
-    color: ""
   },
   personal: {
     marginVertical: 20,
@@ -31,7 +30,7 @@ const styles = StyleSheet.create({
   profileImage: {
     width: vw(45),
     height: vh(45),
-    borderRadius:50,
+    borderRadius: 50,
   },
   profilePic: {
     flexDirection: "row",
@@ -41,15 +40,21 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     borderBottomColor: "#dbdbdb",
   },
-  rightarrow: {
-    width: vw(25),
-    height: vh(25),
-    color: "#7B7E7F",
-    marginLeft: 10,
+  profile: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderBottomWidth: 1,
+    paddingVertical: 5,
+    borderBottomColor: "#dbdbdb",
   },
+
   personalText: {
     fontSize: vw(17),
     color: "black",
+    paddingVertical: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
   },
   profileText: {
     fontSize: vw(17),
@@ -58,47 +63,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-
-  },
-  nickText: {
-    fontSize: vw(16),
-  },
-  nickname: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingTop: 15,
-  },
-  display: {
-    marginVertical: 20,
-    padding: 20,
-    backgroundColor: "white"
-  },
-  personal1: {
-    padding: 20,
-    backgroundColor: "white"
-  },
-  view: {
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 10,
-  },
-  resetText: {
-    fontSize: vw(17),
-    fontWeight: "600",
-    color: "red",
-    padding: 5,
-  },
-  allText: {
-    fontSize: vw(13),
-    fontWeight: "300"
-  },
-  resetText1: {
-    fontSize: vw(17),
-    fontWeight: "600",
-    color: "red",
-    paddingVertical: 5,
-    paddingTop: 25,
   },
   modalContainer: {
     flex: 1,
@@ -132,6 +96,35 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "500"
   },
+  profilePic2: {
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 40,
+  },
+  profileImag1: {
+    width: vw(100),
+    height: vh(100),
+    backgroundColor: "yellow",
+    borderRadius: 100
+  },
+  profileText1: {
+    paddingTop: 30,
+    fontSize: 20,
+    fontWeight: "800"
+  },
+  button:{
+    backgroundColor:"black",
+    padding:12,
+    justifyContent:"center",
+    alignItems:"center",
+    borderRadius:25,
+    marginTop:30,
+  },
+  updateText:{
+    color:"white",
+    fontSize:18,
+    fontWeight:"800"
+  }
 
 });
 

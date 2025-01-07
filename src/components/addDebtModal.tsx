@@ -34,6 +34,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
       category, // Save category instead of nick
       currentBalance,
       annual,
+      nick,
       minimum,
       nextPayment,
       userId: user?.uid,
