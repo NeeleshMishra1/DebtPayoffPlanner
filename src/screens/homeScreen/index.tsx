@@ -89,7 +89,7 @@ const Home = ({ route }: any) => {
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('profile')}>
               <Image
-                source={{ uri: profileImageUrl }} 
+                source={{ uri: profileImageUrl }}
                 style={styles.imageLogo}
               />
             </TouchableOpacity>
@@ -197,8 +197,6 @@ const Home = ({ route }: any) => {
               />
             </View>
           </View>
-
-
 
           <View style={styles.proMember}>
             <View style={styles.proMembership}>

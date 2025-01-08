@@ -27,6 +27,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: vw(20),
         borderTopRightRadius: vw(20),
         padding: 20,
+        flex: 1,
     },
     fundingText: {
         fontSize: vw(17),
@@ -70,9 +71,9 @@ const styles = StyleSheet.create({
     },
     oneTime: {
         backgroundColor: "white",
-        marginTop: 20,
-        padding: 20,
-    }
+        paddingTop: 20,
+    },
+
 
 
 
