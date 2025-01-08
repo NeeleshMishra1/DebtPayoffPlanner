@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     },
     searchContainer: {
         flexDirection: "row",
+        alignItems:"center"
     },
     search: {
         backgroundColor: "#ebeded",
@@ -73,6 +74,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         flexDirection: 'row',
+        alignItems:"center"
 
     },
     searchImage: {
@@ -106,11 +108,11 @@ const styles = StyleSheet.create({
         fontSize: vw(15),
     },
     addData: {
-        padding: 20,
-        marginVertical: 10,
+        padding: vh(20),
+        marginVertical: vh(10),
         backgroundColor: colors.white,
         borderRadius: 10,
-        paddingHorizontal: 40,
+        paddingHorizontal: vw(40),
         borderLeftWidth: 2,
         borderColor: "#f0a502",
     },

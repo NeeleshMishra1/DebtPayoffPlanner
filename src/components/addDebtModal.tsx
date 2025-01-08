@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert } from 'react-native';
+import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Alert, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { vw, vh } from '../utils/dimensions';
 import strings from '../utils/strings';
 import CalenderModal from './calenderModal';
@@ -31,7 +31,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
     const user = auth().currentUser;
 
     const debtData = {
-      category, // Save category instead of nick
+      category,
       currentBalance,
       annual,
       nick,
@@ -44,7 +44,7 @@ const AddModal = ({ visible, onClose, onSave }) => {
     try {
       await firestore()
         .collection('debts')
-        .add(debtData); // Save debt data with category
+        .add(debtData);
       onSave(debtData);
       onClose();
     } catch (error) {
@@ -66,97 +66,101 @@ const AddModal = ({ visible, onClose, onSave }) => {
   };
 
   const handleCategoryModal = (option) => {
-    setCategory(option); // Set selected category
+    setCategory(option);
     closeCategoryModal();
   };
 
   return (
     <Modal visible={visible} animationType="slide" transparent>
       <View style={styles.overlay}>
-        <View style={styles.modalContainer}>
-          <View style={styles.debtContainer}>
-            <TouchableOpacity onPress={onClose}>
-              <Text style={styles.modalTitle1}>{strings.X}</Text>
-            </TouchableOpacity>
-            <Text style={styles.modalTitle}>{strings.DebtDetails}</Text>
-          </View>
+        <KeyboardAvoidingView
+          style={styles.overlay}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
+          <ScrollView contentContainerStyle={{ flexGrow: 1 }} keyboardShouldPersistTaps="handled">
+          <View style={styles.modalContainer}>
+            <View style={styles.debtContainer}>
+              <TouchableOpacity onPress={onClose}>
+                <Text style={styles.modalTitle1}>{strings.X}</Text>
+              </TouchableOpacity>
+              <Text style={styles.modalTitle}>{strings.DebtDetails}</Text>
+            </View>
 
-          <TouchableOpacity style={styles.categoryContainer} onPress={openCategoryModal}>
-            <Text style={styles.categoryText}>{strings.Category}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={category}
-              onChangeText={handleCategoryModal}
-              placeholderTextColor="#A9A9A9"
-              editable={false}
-              selectTextOnFocus={false}
-            />
-          </TouchableOpacity>
-
-          <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{strings.nick}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={nick}
-              onChangeText={setNick}
-              placeholderTextColor="#A9A9A9"
-            />
-          </View>
-
-          <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{strings.currentBalance}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={currentBalance}
-              onChangeText={setCurrentBalance}
-              placeholderTextColor="#A9A9A9"
-            />
-          </View>
-
-          <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{strings.annual}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={annual}
-              onChangeText={setAnnual}
-              placeholderTextColor="#A9A9A9"
-            />
-          </View>
-
-          <View style={styles.categoryContainer}>
-            <Text style={styles.categoryText}>{strings.minimum}</Text>
-            <TextInput
-              style={styles.textInput}
-              value={minimum}
-              onChangeText={setMinimum}
-              placeholderTextColor="#A9A9A9"
-            />
-          </View>
-
-          {/* Next Payment Input */}
-          <TouchableOpacity style={styles.categoryContainer} onPress={openCalendar}>
-            <Text style={styles.categoryText}>{strings.nextPayement}</Text>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <TouchableOpacity style={styles.categoryContainer} onPress={openCategoryModal}>
+              <Text style={styles.categoryText}>{strings.Category}</Text>
               <TextInput
                 style={styles.textInput}
-                value={nextPayment}
-                onChangeText={setNextPayment}
+                value={category}
+                onChangeText={handleCategoryModal}
+                placeholderTextColor="#A9A9A9"
+                editable={false}
+                selectTextOnFocus={false}
+              />
+            </TouchableOpacity>
+
+            <View style={styles.categoryContainer}>
+              <Text style={styles.categoryText}>{strings.nick}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={nick}
+                onChangeText={setNick}
                 placeholderTextColor="#A9A9A9"
               />
-              <Image source={Icon.calneder} style={styles.calenderImage} />
             </View>
-          </TouchableOpacity>
 
-          {/* Save and Cancel Buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.saveButtonText}>{strings.Save}</Text>
+            <View style={styles.categoryContainer}>
+              <Text style={styles.categoryText}>{strings.currentBalance}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={currentBalance}
+                onChangeText={setCurrentBalance}
+                placeholderTextColor="#A9A9A9"
+              />
+            </View>
+
+            <View style={styles.categoryContainer}>
+              <Text style={styles.categoryText}>{strings.annual}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={annual}
+                onChangeText={setAnnual}
+                placeholderTextColor="#A9A9A9"
+              />
+            </View>
+
+            <View style={styles.categoryContainer}>
+              <Text style={styles.categoryText}>{strings.minimum}</Text>
+              <TextInput
+                style={styles.textInput}
+                value={minimum}
+                onChangeText={setMinimum}
+                placeholderTextColor="#A9A9A9"
+              />
+            </View>
+
+            <TouchableOpacity style={styles.categoryContainer} onPress={openCalendar}>
+              <Text style={styles.categoryText}>{strings.nextPayement}</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingRight: 10 }}>
+                <TextInput
+                  style={styles.textInput}
+                  value={nextPayment}
+                  onChangeText={setNextPayment}
+                  placeholderTextColor="#A9A9A9"
+                  editable={false}
+                  selectTextOnFocus={false}
+                />
+                <Image source={Icon.calneder} style={styles.calenderImage} />
+              </View>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-              <Text style={styles.cancelButtonText}>{strings.Advance}</Text>
-            </TouchableOpacity>
+
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                <Text style={styles.saveButtonText}>{strings.Save}</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+          </ScrollView>
+          </KeyboardAvoidingView>
       </View>
       <CalenderModal visible={isCalendarVisible} onClose={closeCalendar} onDateSelect={handleDateSelect} />
       <CategoryModal
@@ -171,6 +175,9 @@ const AddModal = ({ visible, onClose, onSave }) => {
 export default AddModal;
 
 const styles = StyleSheet.create({
+  keyboardAvoidingView: {
+    flex: 1,
+  },
   overlay: {
     flex: 1,
     backgroundColor: "white",
@@ -206,7 +213,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     marginTop: vh(20),
-    justifyContent: "space-evenly"
+    justifyContent: "space-evenly",
+    backgroundColor: "black",
+    borderRadius: 10,
   },
   cancelButton: {
     backgroundColor: '#bdbdbd',

@@ -21,7 +21,7 @@ const Detail = ({ navigation }: any) => {
                 </View>
 
                 <View style={styles.enterText}>
-                    <Text>What do we call you</Text>
+                    <Text style={styles.what}>What do we call you</Text>
                 </View>
                 <View style={styles.name}>
                     <View style={styles.nameInputContainer}>

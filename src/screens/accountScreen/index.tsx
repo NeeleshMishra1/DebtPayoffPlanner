@@ -8,6 +8,7 @@ import currencies from '../../api/currencyjson';
 import PhotoModal from '../../components/photoModal';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { vh, vw } from '../../utils/dimensions';
 
 const Account = ({ route }: any) => {
   const navigation = useNavigation();
@@ -82,7 +83,7 @@ const Account = ({ route }: any) => {
       </TouchableOpacity>
       <View style={styles.profilePic2}>
         <TouchableOpacity
-          style={{ backgroundColor: "green", width: 100, height: 100, borderRadius:100 }}
+          style={{  width: vw(100), height: vh(100), borderRadius:100 }}
           onPress={() => setIsModalVisible(true)}
         >
           <Image source={{ uri: profileImage }} style={styles.profileImag1} />

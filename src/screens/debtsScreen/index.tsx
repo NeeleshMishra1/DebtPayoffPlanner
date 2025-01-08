@@ -193,7 +193,7 @@ const Debts = () => {
         </View>
 
         {filteredDebts.map((debt, index) => (
-          <TouchableOpacity key={index} style={styles.addData}>
+          <View key={index} style={styles.addData}>
             <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
               <Text style={styles.nameText}>{debt.category}</Text> 
               <TouchableOpacity>
@@ -210,7 +210,7 @@ const Debts = () => {
               <Text style={styles.minimumText1}>{currency} {debt.minimum}</Text>
               <Text style={styles.minimumText1}>{debt.annual}</Text>
             </View>
-          </TouchableOpacity>
+          </View>
         ))}
       </ScrollView>
 

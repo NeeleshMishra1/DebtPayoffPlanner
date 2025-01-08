@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   header1: {
-    paddingTop: Platform.OS === 'ios' ? 70 : 0,
-    padding: 20,
+    paddingTop: Platform.OS === 'ios' ? 70 : 30,
+    padding: vh(20),
     flexDirection: "row",
     backgroundColor: "white"
   },
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
 
   },
   modalTitle: {
-    fontSize: 18,
+    fontSize:vh(18),
     fontWeight: 'bold',
     marginBottom: 10,
     color: "white"
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
   profileImag1: {
     width: vw(100),
     height: vh(100),
-    backgroundColor: "yellow",
     borderRadius: 100
   },
   profileText1: {
@@ -118,7 +117,7 @@ const styles = StyleSheet.create({
     justifyContent:"center",
     alignItems:"center",
     borderRadius:25,
-    marginTop:30,
+    marginTop:vh(30),
   },
   updateText:{
     color:"white",

@@ -1,9 +1,11 @@
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, SafeAreaView, Text, TextInput, TouchableOpacity, View, Dimensions, ScrollView, } from 'react-native';
 import styles from './style';
 import strings from '../../utils/strings';
 import Icon from '../../assets';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 type Debt = {
   nick: string;
@@ -12,7 +14,23 @@ type Debt = {
   annual: string;
 };
 
-const Strategy = () => {
+const Strategy = ({ route }: any) => {
+  const { totalCurrentBalance } = route.params || {};
+  const [currency, setCurrency] = useState('');
+  console.log("ok",totalCurrentBalance)
+
+
+    useEffect(() => {
+    const user = auth().currentUser;
+  
+      const userRef = firestore().collection('users').doc(user.uid);
+      userRef.get().then((doc) => {
+        if (doc.exists) {
+          const userData = doc.data();
+          setCurrency(userData?.selectedCurrency);
+        }
+      });
+  }, []);
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.main}>
@@ -32,8 +50,8 @@ const Strategy = () => {
           <View style={styles.amountContainer}>
             <Text style={styles.amountText}>Minimum</Text>
             <View style={{ flexDirection: "row" }}>
-              <Text style={styles.amountText}>ok</Text>
-              <Image source={Icon.question} style={styles.rightarrow} />
+              <Text style={styles.amountText}>0.00</Text>
+
             </View>
           </View>
           <View style={styles.amountContainer1}>
@@ -44,7 +62,7 @@ const Strategy = () => {
           </View>
           <View style={styles.amountContainer}>
             <Text style={styles.amountText}>Total</Text>
-            <Text style={styles.amountText}></Text>
+            <Text style={styles.amountText}> {currency} {totalCurrentBalance}</Text>
           </View>
           <View style={styles.oneTime}>
             <Text style={styles.fundingText}>One- time fundings</Text>

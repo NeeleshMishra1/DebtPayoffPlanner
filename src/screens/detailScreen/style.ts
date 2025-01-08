@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
         width: "65%",
         justifyContent: "center"
     },
+    what:{
+        fontSize:vh(15),
+        fontWeight:"500"
+    }
 });
 
 export default styles;

@@ -41,6 +41,7 @@ const Login = ({ navigation }: any) => {
         }
     }
 
+    const onChangePhn= (text:string) => setPhoneNumber(text)
     return (
         <SafeAreaView style={styles.main}>
             <View style={styles.container}>
@@ -58,7 +59,7 @@ const Login = ({ navigation }: any) => {
                             keyboardType="phone-pad"
                             maxLength={14}
                             value={phoneNumber}
-                            onChangeText={(text) => setPhoneNumber(text)}
+                            onChangeText={onChangePhn}
                         />
                     </View>
                 </View>
@@ -67,7 +68,7 @@ const Login = ({ navigation }: any) => {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.otpContainer1} onPress={signInWithGoogle}>
-                    <Image source={Icon.google} style={styles.googleImage} />
+                    <Image source={Icon.google} style={styles.googleImage} resizeMode="contain"/>
                     <Text style={styles.otpText1}>Continue with Google</Text>
                 </TouchableOpacity>
             </View>

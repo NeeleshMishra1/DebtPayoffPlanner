@@ -6,8 +6,10 @@ import { useNavigation } from '@react-navigation/native';
 import strings from '../../utils/strings';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Profile = ({ route }: any) => {
+  const insets = useSafeAreaInsets();
   const navigation = useNavigation();
   const email = route?.params?.email || "neelesh@example.com";
   
@@ -48,13 +50,13 @@ const Profile = ({ route }: any) => {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: insets.top}]}>
       <TouchableOpacity style={styles.header1} onPress={() => navigation.goBack()}>
         <Image source={Icon.left_arrow} style={styles.leftarrow} />
       </TouchableOpacity>
       <View style={styles.profileData}>
         <Image
-          source={{ uri: profileImage }}  // Use the fetched profile image
+          source={{ uri: profileImage }} 
           style={styles.profileImage}
         />
         <View style={styles.profileText}>
@@ -72,7 +74,7 @@ const Profile = ({ route }: any) => {
                   break;
               }
             }}>
-              <Image source={item.icon} style={styles.profileImage2} />
+              <Image source={item.icon} style={styles.profileImage2} resizeMode='contain' />
               <Text style={styles.myAccountText}>{item.title}</Text>
               <Image source={Icon.right_arrow} style={styles.rightarrow} />
             </TouchableOpacity>

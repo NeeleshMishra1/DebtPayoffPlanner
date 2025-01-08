@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   header1: {
-    marginTop: 50,
+    paddingTop: 50,
     padding: 20,
   },
   profileData: {

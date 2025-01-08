@@ -142,12 +142,12 @@ const Home = ({ route }: any) => {
                       <Text style={styles.legendText}>Principal paid</Text>
                       <Text style={styles.legendText1}> {currency}0.00</Text>
                     </View>
-                    <View style={styles.legendItem}>
+                    <TouchableOpacity style={styles.legendItem} onPress={() => navigation.navigate('Strategy', { totalCurrentBalance })}>
                       <Text style={styles.legendText}>Balance</Text>
                       <Text style={styles.legendText2}>
                         {currency} {totalCurrentBalance > 0 ? totalCurrentBalance : 'N/A'}.00
                       </Text>
-                    </View>
+                    </TouchableOpacity>
                   </View>
                 </View>
               </View>

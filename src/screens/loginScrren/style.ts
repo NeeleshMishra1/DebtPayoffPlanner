@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        padding: 20,
+        padding: vh(20),
     },
     logoContainer: {
         justifyContent: "center",
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         fontWeight: "700",
         fontFamily: 'FlameRegular',
         color: "black",
-        margin: 20
+        margin: vh(20)
     },
     enterText: {
         fontSize: vw(15),
@@ -32,28 +32,31 @@ const styles = StyleSheet.create({
     phoneNumber: {
         justifyContent: "center",
         alignItems: "center",
-        margin: 10,
-        borderRadius: 50,
+        margin: vh(10),
+        borderRadius: vh(50),
         borderWidth: 1,
-        marginTop: 20,
+        marginTop: vh(20),
+
     },
     phoneInputContainer: {
         flexDirection: "row",
         width: "85%",
         paddingVertical: 5,
+    alignItems:"center"
     },
     countryCode: {
-        padding: 10,
+        padding: vh(10),
         paddingLeft: 0,
         fontSize: vw(15),
         color: "#512414",
+        lineHeight:24,
         fontWeight: "600"
     },
     textInput: {
         fontSize: vw(15),
         borderLeftWidth: 1,
         margin: 5,
-        paddingLeft: 10,
+        paddingLeft: vh(10),
     },
     otpContainer: {
         justifyContent: "center",
@@ -75,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         margin: vh(10),
         backgroundColor: "white",
-        padding: 15,
+        padding: vh(15),
         borderRadius: 50,
         borderWidth: 1,
         marginTop: vh(10),
@@ -87,9 +90,10 @@ const styles = StyleSheet.create({
         fontWeight: "400"
     },
     googleImage: {
-        width: vw(20),
-        height: vh(20),
+        width: vw(18),
+        height: vh(18),
         marginRight: 10,
+    
     }
 
 });

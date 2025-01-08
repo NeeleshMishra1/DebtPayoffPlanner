@@ -55,6 +55,7 @@ const styles = StyleSheet.create({
     amountContainer: {
         flexDirection: "row",
         justifyContent: "space-between",
+        alignItems:"center"
     },
     rightarrow: {
         width: vw(18),

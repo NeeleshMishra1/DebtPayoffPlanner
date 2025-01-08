@@ -74,8 +74,8 @@ const styles = StyleSheet.create({
         paddingHorizontal: 50
     },
     otpInput: {
-        width: 50,
-        height: 50,
+        width: vw(50),
+        height: vh(50),
         borderWidth: 2,
         borderRadius: 10,
         borderColor: '#ccc',

@@ -279,7 +279,7 @@ const styles = StyleSheet.create({
     pie2:{
         borderRadius:10,
         padding:15,
-        paddingHorizontal:35,
+        paddingHorizontal:vh(35),
         alignItems:"center",
     },
     legendContainer1: {
