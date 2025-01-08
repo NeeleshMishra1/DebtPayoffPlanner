@@ -19,6 +19,7 @@ type NavigationProp = {
 const Home = ({ route }: any) => {
   const navigation = useNavigation<NavigationProp>();
   const [debts, setDebts] = useState([]);
+  const [currency, setCurrency] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState("https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c");
 
   const name = route?.params?.name || "Neelesh";
@@ -47,6 +48,7 @@ const Home = ({ route }: any) => {
         if (doc.exists) {
           const userData = doc.data();
           setProfileImageUrl(userData?.profileImage || profileImageUrl);
+          setCurrency(userData?.selectedCurrency);
         }
       });
       return () => unsubscribe();
@@ -87,7 +89,7 @@ const Home = ({ route }: any) => {
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('profile')}>
               <Image
-                source={{ uri: profileImageUrl }} // Fetching profile image from Firestore
+                source={{ uri: profileImageUrl }} 
                 style={styles.imageLogo}
               />
             </TouchableOpacity>
@@ -138,12 +140,12 @@ const Home = ({ route }: any) => {
                   <View style={styles.legendContainer}>
                     <View style={styles.legendItem}>
                       <Text style={styles.legendText}>Principal paid</Text>
-                      <Text style={styles.legendText1}>0.00</Text>
+                      <Text style={styles.legendText1}> {currency}0.00</Text>
                     </View>
                     <View style={styles.legendItem}>
                       <Text style={styles.legendText}>Balance</Text>
                       <Text style={styles.legendText2}>
-                        {totalCurrentBalance > 0 ? totalCurrentBalance : 'N/A'}.00
+                        {currency} {totalCurrentBalance > 0 ? totalCurrentBalance : 'N/A'}.00
                       </Text>
                     </View>
                   </View>
@@ -173,7 +175,7 @@ const Home = ({ route }: any) => {
                         <Text>Paid off in 1 mo</Text>
                         <View style={{ flexDirection: 'row', paddingVertical: 10, justifyContent: "center", alignItems: "center" }}>
                           <View style={{ position: 'absolute', zIndex: 1 }}>
-                            <Text style={{ fontSize: 18, fontWeight: '400' }}>0.0%</Text>
+                            <Text style={{ fontSize: 18, fontWeight: '400' }}> 0.0%</Text>
                           </View>
                           <PieChart
                             widthAndHeight={widthAndHeight2}
@@ -185,7 +187,7 @@ const Home = ({ route }: any) => {
                         <View style={styles.legendContainer1}>
                           <View style={styles.legendItem}>
                             <Text style={styles.legendText}>Balance</Text>
-                            <Text style={styles.balantext}>{item.currentBalance}.00</Text>
+                            <Text style={styles.balantext}> {currency}{item.currentBalance}.00</Text>
                           </View>
                         </View>
                       </View>

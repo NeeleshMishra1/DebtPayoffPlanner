@@ -1,10 +1,43 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView, } from 'react-native';
 import Icon from '../assets';
 import { vh, vw } from '../utils/dimensions';
 import { useNavigation } from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 const SearchModal = ({ visible, onClose, searchQuery, onSearchChange, debts }) => {
+  const [currency, setCurrency] = useState('');
+
+  useEffect(() => {
+    const fetchUserCurrency = async () => {
+      try {
+        const user = auth().currentUser;
+  
+        if (!user) {
+          console.warn("No authenticated user found.");
+          return;
+        }
+  
+        const userRef = firestore().collection('users').doc(user.uid);
+        const doc = await userRef.get();
+  
+        if (doc.exists) {
+          const userData = doc.data();
+          setCurrency(userData?.selectedCurrency || 'USD $'); 
+        } else {
+          console.warn("User document does not exist.");
+        }
+      } catch (error) {
+        console.error("Error fetching user currency:", error);
+      }
+    };
+  
+    fetchUserCurrency();
+  }, []);
+  
+
+
   return (
     <Modal visible={visible} animationType="slide" transparent={true}>
       <View style={styles.modalContainer}>
@@ -29,13 +62,13 @@ const SearchModal = ({ visible, onClose, searchQuery, onSearchChange, debts }) =
             <TouchableOpacity key={index} style={styles.addData} onPress={onClose}>
               <Text style={styles.nameText}>{debt.nick}</Text>
               <Text style={styles.balanceText1}>Balance</Text>
-              <Text style={styles.currentText1}>{debt.currentBalance}</Text>
+              <Text style={styles.currentText1}>{currency}{debt.currentBalance}</Text>
               <View style={styles.aprContainer}>
                 <Text style={styles.balanceText1}>Minimum</Text>
                 <Text style={styles.balanceText1}>APR</Text>
               </View>
               <View style={styles.aprContainer}>
-                <Text style={styles.minimumText1}>{debt.minimum}</Text>
+                <Text style={styles.minimumText1}> {currency}{debt.minimum}</Text>
                 <Text style={styles.minimumText1}>{debt.annual}</Text>
               </View>
             </TouchableOpacity>

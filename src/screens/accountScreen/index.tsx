@@ -43,8 +43,9 @@ const Account = ({ route }: any) => {
     fetchUserProfile();
   }, []);
 
-  const handleCurrencySelect = (currency: string) => {
-    setSelectedCurrency(currency);
+  const handleCurrencySelect = (currencyCode: string) => {
+    const currency = currencies[currencyCode]; 
+    setSelectedCurrency(currency.symbol); 
     setCurrencyModalVisible(false);
   };
 
@@ -127,19 +128,24 @@ const Account = ({ route }: any) => {
       >
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
-            <FlatList
-              data={currencies}
-              keyExtractor={(item) => item}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <Pressable
-                  style={styles.currencyOption}
-                  onPress={() => handleCurrencySelect(item)}
-                >
-                  <Text style={styles.currencyText}>{item}</Text>
-                </Pressable>
-              )}
-            />
+          <FlatList
+      data={Object.keys(currencies)} 
+      keyExtractor={(key) => key}
+      showsVerticalScrollIndicator={false}
+      renderItem={({ item }) => {
+        const currency = currencies[item]; 
+        return (
+          <Pressable
+            style={styles.currencyOption}
+            onPress={() => handleCurrencySelect(item)} 
+          >
+            <Text style={styles.currencyText}>
+              {currency.symbol} 
+            </Text>
+          </Pressable>
+        );
+      }}
+    />
           </View>
         </View>
       </Modal>

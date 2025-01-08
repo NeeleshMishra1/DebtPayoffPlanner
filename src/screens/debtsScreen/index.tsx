@@ -26,6 +26,7 @@ const Debts = () => {
   const [debts, setDebts] = useState<Debt[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [filteredDebts, setFilteredDebts] = useState<Debt[]>([]);
+  const [currency, setCurrency] = useState('');
 
   useEffect(() => {
     const user = auth().currentUser;
@@ -47,6 +48,14 @@ const Debts = () => {
             console.error('Error fetching debts:', error);
           }
         );
+
+        const userRef = firestore().collection('users').doc(user.uid);
+        userRef.get().then((doc) => {
+          if (doc.exists) {
+            const userData = doc.data();
+            setCurrency(userData?.selectedCurrency);
+          }
+        });
 
       return () => unsubscribe();
     }
@@ -107,7 +116,7 @@ const Debts = () => {
   const handleSearchChange = (text: string) => {
     setSearchQuery(text);
     const results = debts.filter((debt) =>
-      debt.category.toLowerCase().includes(text.toLowerCase()) // searching by category instead of nick
+      debt.category.toLowerCase().includes(text.toLowerCase()) 
     );
     setFilteredDebts(results);
   };
@@ -126,7 +135,7 @@ const Debts = () => {
             <View style={{ flexDirection: 'row', paddingVertical: 10 }}>
               <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <View style={{ position: 'absolute', zIndex: 1 }}>
-                  <Text style={{ fontSize: 12, fontWeight: '600' }}>${calculateTotalCurrentBalance()}</Text>
+                  <Text style={{ fontSize: 12, fontWeight: '600' }}>{currency}{calculateTotalCurrentBalance()}</Text>
                 </View>
                 <PieChart
                   widthAndHeight={widthAndHeight}
@@ -192,13 +201,13 @@ const Debts = () => {
               </TouchableOpacity>
             </View>
             <Text style={styles.balanceText1}>Balance</Text>
-            <Text style={styles.currentText1}>{debt.currentBalance}</Text>
+            <Text style={styles.currentText1}>{currency}{debt.currentBalance}</Text>
             <View style={styles.aprContainer}>
               <Text style={styles.balanceText1}>Minimum</Text>
               <Text style={styles.balanceText1}>APR</Text>
             </View>
             <View style={styles.aprContainer}>
-              <Text style={styles.minimumText1}>{debt.minimum}</Text>
+              <Text style={styles.minimumText1}>{currency} {debt.minimum}</Text>
               <Text style={styles.minimumText1}>{debt.annual}</Text>
             </View>
           </TouchableOpacity>
