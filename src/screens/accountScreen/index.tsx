@@ -9,27 +9,34 @@ import PhotoModal from '../../components/photoModal';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 import { vh, vw } from '../../utils/dimensions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Account = ({ route }: any) => {
   const navigation = useNavigation();
-  const name = route?.params?.name || "Neelesh";
   const [currencyModalVisible, setCurrencyModalVisible] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState('    USD $');
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [name, setName] = useState('Guest');
   const [profileImage, setProfileImage] = useState(
     "https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c"
   );
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
+    const fetchUserData = async () => {
       try {
+        const storedName = await AsyncStorage.getItem('userName');
+        if (storedName) {
+          setName(storedName); 
+        }
+  
         const user = auth().currentUser;
         if (user) {
           const userDoc = await firestore()
             .collection('users')
             .doc(user.uid)
             .get();
-          
+  
           if (userDoc.exists) {
             const userData = userDoc.data();
             setProfileImage(userData?.profileImage || profileImage);
@@ -37,12 +44,13 @@ const Account = ({ route }: any) => {
           }
         }
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error('Error fetching user data:', error);
       }
     };
-
-    fetchUserProfile();
+  
+    fetchUserData();
   }, []);
+  
 
   const handleCurrencySelect = (currencyCode: string) => {
     const currency = currencies[currencyCode]; 
@@ -83,7 +91,7 @@ const Account = ({ route }: any) => {
       </TouchableOpacity>
       <View style={styles.profilePic2}>
         <TouchableOpacity
-          style={{  width: vw(100), height: vh(100), borderRadius:100 }}
+          style={{  width: vw(100), height: vh(100), borderRadius:100 ,borderWidth:1,}}
           onPress={() => setIsModalVisible(true)}
         >
           <Image source={{ uri: profileImage }} style={styles.profileImag1} />
@@ -114,7 +122,7 @@ const Account = ({ route }: any) => {
           </View>
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={saveProfileToFirestore}>
-          <Text style={styles.updateText}>Update Profile</Text>
+          <Text style={styles.updateText}>{strings.Update_Profile}</Text>
         </TouchableOpacity>
       </View>
       <PhotoModal

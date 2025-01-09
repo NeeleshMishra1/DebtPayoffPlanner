@@ -70,8 +70,12 @@ const strings = {
   annual:"Annual Percentage Rate *",
   minimum:"Minimum payment *",
   nextPayement:"Next payment due date *",
-  an_otp:"An OTP has been sent to"
-  
+  an_otp:"An OTP has been sent to",
+  Update_Profile:"Update Profile"  ,
+  Sort_by:"Sort by",
+  Balance:"Balance",
+  Minimum:"Minimum",
+  login:"Login",
 };
 
 export default strings;

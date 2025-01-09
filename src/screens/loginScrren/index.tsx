@@ -33,7 +33,7 @@ const Login = ({ navigation }: any) => {
         try {
             const user = await onGoogleButtonPress();
             console.log("User signed in with Google:", user);
-            navigation.navigate("bottom", { user });
+            navigation.navigate("detail", { user });
 
         } catch (error) {
             console.error("Google Sign-In Error:", error);

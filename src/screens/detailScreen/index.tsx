@@ -4,9 +4,26 @@ import styles from "./style";
 import Icon from "../../assets";
 import strings from "../../utils/strings";
 import { CommonActions } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Detail = ({ navigation }: any) => {
     const [name, setName] = useState('');
+    const handleDone = async () => {
+        try {
+          // Save the name to AsyncStorage
+          await AsyncStorage.setItem('userName', name);
+    
+          // Navigate to the next screen
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'bottom', params: { screen: 'Home' } }],
+            })
+          );
+        } catch (error) {
+          console.error('Error saving name to AsyncStorage:', error);
+        }
+      };
 
     return (
         <SafeAreaView style={styles.main}>
@@ -16,7 +33,7 @@ const Detail = ({ navigation }: any) => {
                 </TouchableOpacity>
                 <View style={styles.loginConatiner}>
                     <Image source={Icon.splace} style={styles.image} />
-                    <Text style={styles.loginText}>Login</Text>
+                    <Text style={styles.loginText}>{strings.login}</Text>
 
                 </View>
 
@@ -37,15 +54,7 @@ const Detail = ({ navigation }: any) => {
                 </View>
 
                 <TouchableOpacity
-                    style={styles.otpContainer}
-                    onPress={() =>
-                        navigation.dispatch(
-                            CommonActions.reset({
-                                index: 0,
-                                routes: [{ name: "bottom", params: { screen: "Home", params: { name } } }],
-                            })
-                        )
-                    }>
+                    style={styles.otpContainer} onPress={handleDone}>
                     <Text style={styles.otpText}>Done</Text>
                 </TouchableOpacity>
 

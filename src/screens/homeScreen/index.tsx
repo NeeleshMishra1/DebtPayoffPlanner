@@ -11,6 +11,7 @@ import { vh } from '../../utils/dimensions';
 import PieChart from 'react-native-pie-chart';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type NavigationProp = {
   navigate: (screen: string) => void;
@@ -21,40 +22,61 @@ const Home = ({ route }: any) => {
   const [debts, setDebts] = useState([]);
   const [currency, setCurrency] = useState('');
   const [profileImageUrl, setProfileImageUrl] = useState("https://lh3.googleusercontent.com/a/ACg8ocJNBuMQBS4T_K_Ivc2SvLGGHA0M4GHcdEYRrysgiwjnoEf1ww=s96-c");
-
-  const name = route?.params?.name || "Neelesh";
+  const [name, setName] = useState('Guest');
 
   useEffect(() => {
-    const user = auth().currentUser;
-    if (user) {
-      const unsubscribe = firestore()
-        .collection('debts')
-        .where('userId', '==', user.uid)
-        .onSnapshot(
-          (snapshot) => {
-            const fetchedDebts = snapshot.docs.map((doc) => ({
-              id: doc.id,
-              ...doc.data(),
-            }));
-            setDebts(fetchedDebts);
-          },
-          (error) => {
-            console.error('Error fetching debts:', error);
-          }
-        );
-
-      const userRef = firestore().collection('users').doc(user.uid);
-      userRef.get().then((doc) => {
-        if (doc.exists) {
-          const userData = doc.data();
-          setProfileImageUrl(userData?.profileImage || profileImageUrl);
-          setCurrency(userData?.selectedCurrency);
+    const fetchUserData = async () => {
+      try {
+        const storedName = await AsyncStorage.getItem('userName');
+        if (storedName) {
+          setName(storedName);
         }
-      });
-      return () => unsubscribe();
-    }
-  }, []);
+        const user = auth().currentUser;
+        if (user) {
+          const unsubscribe = firestore()
+            .collection('debts')
+            .where('userId', '==', user.uid)
+            .onSnapshot(
+              (snapshot) => {
+                const fetchedDebts = snapshot.docs.map((doc) => ({
+                  id: doc.id,
+                  ...doc.data(),
+                }));
+                setDebts(fetchedDebts);
+              },
+              (error) => {
+                console.error('Error fetching debts:', error);
+              }
+            );
 
+          const userRef = firestore().collection('users').doc(user.uid);
+          const userDoc = await userRef.get();
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            setProfileImageUrl(userData?.profileImage || profileImageUrl);
+            setCurrency(userData?.selectedCurrency);
+          }
+          return () => unsubscribe();
+        }
+      } catch (error) {
+        console.error('Error in fetchUserData:', error);
+      }
+    };
+
+    fetchUserData();
+
+    return () => {
+      const user = auth().currentUser;
+      if (user) {
+        const unsubscribe = firestore()
+          .collection('debts')
+          .where('userId', '==', user.uid)
+          .onSnapshot(() => {});
+        unsubscribe();
+      }
+    };
+  }, []);
+  
   const widthAndHeight = vh(120);
   const widthAndHeight2 = vh(100);
   const totalCurrentBalance = debts.reduce(

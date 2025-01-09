@@ -154,7 +154,7 @@ const Debts = () => {
                         { backgroundColor: sliceColor[index] || '#d3d3d3' },
                       ]}
                     />
-                    <Text style={styles.legendText}>{debt.category}</Text> {/* Updated to use category */}
+                    <Text style={styles.legendText}>{debt.category}</Text>
                   </View>
                 ))}
               </View>
@@ -182,7 +182,7 @@ const Debts = () => {
               </TouchableOpacity>
 
               <TouchableOpacity style={styles.sort} onPress={openSortModal}>
-                <Text style={styles.sortText}>Sort by</Text>
+                <Text style={styles.sortText}>{strings.Sort_by}</Text>
                 <View style={styles.dropDown}>
                   <Text style={styles.aprtText}>{selectedSortOption}</Text>
                   <Image source={Icon.arrow_down} style={styles.arrowImage} />
@@ -200,10 +200,10 @@ const Debts = () => {
                 <Image source={Icon.edit} style={styles.editImage} />
               </TouchableOpacity>
             </View>
-            <Text style={styles.balanceText1}>Balance</Text>
+            <Text style={styles.balanceText1}>{strings.balance}</Text>
             <Text style={styles.currentText1}>{currency}{debt.currentBalance}</Text>
             <View style={styles.aprContainer}>
-              <Text style={styles.balanceText1}>Minimum</Text>
+              <Text style={styles.balanceText1}>{strings.Minimum}</Text>
               <Text style={styles.balanceText1}>APR</Text>
             </View>
             <View style={styles.aprContainer}>

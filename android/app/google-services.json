@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "456209557497-t6n059mfha62ubt0aeeettf32831v2pq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.debtpayoffplanner",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
           "client_id": "456209557497-2tel283mn3u6bbm2foj1nmsicpc91e2p.apps.googleusercontent.com",
           "client_type": 3
         }

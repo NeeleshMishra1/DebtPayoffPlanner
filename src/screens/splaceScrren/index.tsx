@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Image, Text } from 'react-native';
 import styles from './style';
 import Icon from '../../assets';
 import strings from '../../utils/strings';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type RootStackParamList = {
   bottom: undefined;
@@ -13,20 +14,33 @@ type RootStackParamList = {
 const Splace = () => {
   const navigation = useNavigation();
 
-  const handleSplace = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'tutorial' }],
-    });
+  const checkTutorialStatus = async () => {
+    try {
+      const hasSeenTutorial = await AsyncStorage.getItem('hasSeenTutorial');
+      if (hasSeenTutorial) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'login' }],
+        });
+      } else {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'tutorial' }],
+        });
+      }
+    } catch (error) {
+      console.error('Error checking tutorial status:', error);
+    }
   };
+ 
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      handleSplace();
-    }, 1000);
-
+      checkTutorialStatus();
+    }, 1000); 
     return () => clearTimeout(timer);
   }, []);
+
 
   return (
     <View style={styles.container1}>

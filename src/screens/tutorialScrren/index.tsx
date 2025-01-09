@@ -4,30 +4,46 @@ import styles from './style';
 import Icon from '../../assets';
 import { slides } from '../../api/tutorialjson';
 import strings from '../../utils/strings';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Tutorial = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
+
+
+
+  const handleCompleteTutorial = async () => {
+    try {
+      await AsyncStorage.setItem('hasSeenTutorial', 'true');
+      navigation.reset({
+        index: 0,
+        routes: [{ name: 'login' }],
+      });
+    } catch (error) {
+      console.error('Error saving tutorial status:', error);
+    }
+  };
+
 
   const handleNext = () => {
     if (currentIndex < slides.length - 1) {
       flatListRef.current.scrollToIndex({ index: currentIndex + 1 });
       setCurrentIndex(currentIndex + 1);
     } else {
-      handleHome();
+     handleCompleteTutorial();
     }
   };
 
   const handleSkip = () => {
-    handleHome();
+    handleCompleteTutorial();
   };
 
-  const handleHome = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'login' }],
-    });
-  };
+  // const handleHome = () => {
+  //   navigation.reset({
+  //     index: 0,
+  //     routes: [{ name: 'login' }],
+  //   });
+  // };
 
   const renderItem = ({ item }) => (
     <View style={[styles.slide]}>
