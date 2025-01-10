@@ -208,7 +208,7 @@ const Debts = () => {
             </View>
             <View style={styles.aprContainer}>
               <Text style={styles.minimumText1}>{currency} {debt.minimum}</Text>
-              <Text style={styles.minimumText1}>{debt.annual}</Text>
+              <Text style={styles.minimumText1}>{debt.annual} </Text>
             </View>
           </View>
         ))}
