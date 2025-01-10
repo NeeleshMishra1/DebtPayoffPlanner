@@ -76,6 +76,7 @@ const strings = {
   Balance:"Balance",
   Minimum:"Minimum",
   login:"Login",
+  web:"web"
 };
 
 export default strings;
