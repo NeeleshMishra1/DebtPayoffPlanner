@@ -5,6 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Icon from "../../assets";
 import auth from "@react-native-firebase/auth";
 import { onGoogleButtonPress } from "../../config/fireBase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Login = ({ navigation }: any) => {
     const [phoneNumber, setPhoneNumber] = useState("");
@@ -18,6 +19,7 @@ const Login = ({ navigation }: any) => {
                 const confirmation = await auth().signInWithPhoneNumber(`+91 ${phoneNumber}`);
                 console.log('pn-->', phoneNumber);
                 console.log("confirmation-->", confirmation)
+                await AsyncStorage.setItem('userLoggedIn', 'true');
                 navigation.navigate("otp", { confirmation });
             } catch (error) {
                 Alert.alert("Error", "Failed to send OTP. Please try again.");
@@ -32,6 +34,7 @@ const Login = ({ navigation }: any) => {
         console.log('runn1');
         try {
             const user = await onGoogleButtonPress();
+            await AsyncStorage.setItem('userLoggedIn', 'true');
             console.log("User signed in with Google:", user);
             navigation.navigate("detail", { user });
 

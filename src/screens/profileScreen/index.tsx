@@ -80,6 +80,7 @@ const Profile = ({ route }: any) => {
                   case 6:
                     try {
                       await auth().signOut();
+                      await AsyncStorage.removeItem('userLoggedIn');
                       navigation.dispatch(
                         CommonActions.reset({
                           index: 0,

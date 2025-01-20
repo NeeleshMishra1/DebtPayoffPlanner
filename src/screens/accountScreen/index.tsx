@@ -29,14 +29,12 @@ const Account = ({ route }: any) => {
         if (storedName) {
           setName(storedName); 
         }
-  
         const user = auth().currentUser;
         if (user) {
           const userDoc = await firestore()
             .collection('users')
             .doc(user.uid)
             .get();
-  
           if (userDoc.exists) {
             const userData = userDoc.data();
             setProfileImage(userData?.profileImage || profileImage);
@@ -47,7 +45,6 @@ const Account = ({ route }: any) => {
         console.error('Error fetching user data:', error);
       }
     };
-  
     fetchUserData();
   }, []);
   

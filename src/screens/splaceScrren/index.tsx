@@ -14,33 +14,37 @@ type RootStackParamList = {
 const Splace = () => {
   const navigation = useNavigation();
 
-  const checkTutorialStatus = async () => {
+  const checkAppState = async () => {
     try {
       const hasSeenTutorial = await AsyncStorage.getItem('hasSeenTutorial');
-      if (hasSeenTutorial) {
+      const isLoggedIn = await AsyncStorage.getItem('userLoggedIn');
+  
+      if (!hasSeenTutorial) {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'login' }],
+          routes: [{ name: 'tutorial' }], 
+        });
+      } else if (isLoggedIn === 'true') {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'bottom' }], 
         });
       } else {
         navigation.reset({
           index: 0,
-          routes: [{ name: 'tutorial' }],
+          routes: [{ name: 'login' }],
         });
       }
     } catch (error) {
-      console.error('Error checking tutorial status:', error);
+      console.error('Error checking app state:', error);
     }
   };
- 
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      checkTutorialStatus();
+      checkAppState();
     }, 1000); 
     return () => clearTimeout(timer);
   }, []);
-
 
   return (
     <View style={styles.container1}>

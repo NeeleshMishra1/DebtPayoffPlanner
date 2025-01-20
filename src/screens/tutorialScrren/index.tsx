@@ -9,9 +9,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tutorial = ({ navigation }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
-
-
-
   const handleCompleteTutorial = async () => {
     try {
       await AsyncStorage.setItem('hasSeenTutorial', 'true');
@@ -23,7 +20,6 @@ const Tutorial = ({ navigation }) => {
       console.error('Error saving tutorial status:', error);
     }
   };
-
 
   const handleNext = () => {
     if (currentIndex < slides.length - 1) {
@@ -37,13 +33,6 @@ const Tutorial = ({ navigation }) => {
   const handleSkip = () => {
     handleCompleteTutorial();
   };
-
-  // const handleHome = () => {
-  //   navigation.reset({
-  //     index: 0,
-  //     routes: [{ name: 'login' }],
-  //   });
-  // };
 
   const renderItem = ({ item }) => (
     <View style={[styles.slide]}>
